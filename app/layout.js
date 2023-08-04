@@ -1,6 +1,9 @@
+"use client";
 import MainLayout from "@/components/layout/layout";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <MainLayout>{children} </MainLayout>
+      </body>
     </html>
   );
 }

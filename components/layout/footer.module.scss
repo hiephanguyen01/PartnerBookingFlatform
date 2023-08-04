@@ -1,65 +1,86 @@
-.footer {
-  background-color: #fff;
-  color: #1b1b1b;
-  padding: 3.125rem 9.375rem;
-  .wrapper {
+.Footer {
+  background-color: #ffffff;
+  margin: 56px 0;
+
+  .title {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+
+  .logo {
+    margin: 20px 0 35px;
+  }
+
+  .icons {
+    margin: 10px 0;
+    width: 170px;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
+    align-items: center;
   }
-}
 
-.item {
-  display: flex;
-  flex-direction: column;
-
-  h5 {
-    font-weight: 600;
+  .item {
+    cursor: pointer;
+    color: #3f3f3f;
+    font-family: Montserrat;
     font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 10px;
   }
-  h3 {
-    position: relative;
-    padding-bottom: 0.8rem;
-    font-weight: 600;
-    font-size: 18px;
-    &::after {
-      content: "";
-      width: 5rem;
-      height: 0.1rem;
-      background: red;
-      position: absolute;
-      bottom: 0;
-      left: 0;
+
+  // .wrapGooglePlay {
+  //   width: 50%;
+  .badgeAndroid {
+    width: 100%;
+    height: fit-content;
+    object-fit: contain;
+  }
+
+  .badgeIos {
+    svg {
+      margin-top: 6px;
     }
   }
-  ul {
-    margin-top: 1rem;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    li {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
+  // }
+
+  // .wrapAppStore {
+  //   width: 50%;
+  // }
+
+  .mt-20 {
+    margin-bottom: 20px;
+  }
+
+  .pt-30 {
+    padding-top: 30px;
+  }
+
+  .exten {
+    padding: 20px 0 !important;
   }
 }
 
-.language {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 9rem;
+.copywrite {
+  padding: 42px 0;
+  width: 100%;
+  text-align: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #616161;
 }
 
-@media (min-width: 0px) and (max-width: 601px) {
-  .footer {
-    padding: 2rem 1.5rem;
-
-    .wrapper {
-      gap: 1rem;
+@media (max-width: 576px) {
+  .Footer {
+    .title {
+      text-align: center !important;
     }
   }
 }
