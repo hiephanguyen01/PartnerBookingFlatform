@@ -1,0 +1,17 @@
+.header {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.25rem 6.25rem;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+@media (min-width: 0px) and (max-width: 601px) {
+  .header {
+    padding: 1rem;
+    .button {
+      // display: none;
+    }
+  }
+}
