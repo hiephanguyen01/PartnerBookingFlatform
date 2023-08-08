@@ -27,6 +27,9 @@ import "swiper/css/navigation";
 // import required modules
 import { Pagination, Navigation, HashNavigation } from "swiper/modules";
 import ArrowRight from "@/assets/svg/SolutionSection/ArrowRight";
+import moment from "moment";
+import { FloatButton } from "antd/es";
+import ArrowToTop from "@/assets/svg/ArrowToTop";
 
 const SEARCH_SECTION_LIST = [
   {
@@ -111,6 +114,11 @@ export default function Home() {
   const onChange = (key) => {
     console.log(key);
   };
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
+
   const items = TABS_LIST.map((item) => ({
     key: item.id,
     label: item.label,
@@ -156,15 +164,15 @@ export default function Home() {
               <Image
                 src={SolutionImg1}
                 alt=""
-                style={{ width: "30%", objectFit: "cover" }}
+                style={{ width: "30%", objectFit: "cover", height: "100%" }}
               />
               <div className={classes.content}>
                 <label>{item.label}</label>
                 <p>{item.description}</p>
-                <div>
+                <div className={classes.textBottom}>
                   <span>Studio</span>
                   <span className={classes.dot}></span>
-                  {/* <span>{moment().format("dd/mm/yyyy")}</span> */}
+                  <span>{moment().format("DD/MM/YYYY")}</span>
                 </div>
               </div>
             </div>
@@ -186,15 +194,27 @@ export default function Home() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
-          <Space style={{ marginBottom: "80px" }} size={20}>
-            <Button className="header_btn_join" type="primary">
-              Tham gia Booking Studio
-            </Button>
-            <Button danger className="header_btn_direction">
-              Đến trang quản lý <AlignArrowHorizontal />
-            </Button>
-          </Space>
-          <Image src={BannerImg} alt=""></Image>
+          <Row
+            style={{ marginBottom: "80px" }}
+            gutter={[20, 20]}
+            justify={{ xs: "center" }}
+          >
+            <Col>
+              <Button className="header_btn_join" type="primary">
+                Tham gia Booking Studio
+              </Button>
+            </Col>
+            <Col>
+              <Button danger className="header_btn_direction">
+                Đến trang quản lý <AlignArrowHorizontal />
+              </Button>
+            </Col>
+          </Row>
+          <Image
+            src={BannerImg}
+            alt=""
+            style={{ objectFit: "cover", width: "100%" }}
+          />
         </div>
       </div>
 
@@ -222,25 +242,6 @@ export default function Home() {
             </Col>
           ))}
         </Row>
-      </HomeSection>
-      <HomeSection className={classes.sectionSupport}>
-        <p className={classes.titleSmall}>Hỗ trợ</p>
-        <Divider className={classes.divider} />
-        <h3 className={[classes.supportTitle, classes.sectionTitle].join(" ")}>
-          BẠN CẦN HỖ TRỢ VỀ VẤN ĐỀ GÌ?
-        </h3>
-        <Row gutter={[28, 28]} style={{ width: "100%", marginBottom: "56px" }}>
-          {SUPPORT_SECTION_LIST.map((item) => (
-            <Col xl={8} lg={8} md={12} sm={24} xs={24} key={item.id}>
-              <div className={classes.supportSectionItem}>
-                <div className={classes.icon}>{item.icon}</div>
-                <label>{item.label}</label>
-                <p>{item.description}</p>
-              </div>
-            </Col>
-          ))}
-        </Row>
-        <Button className="btnPrimary btnSeeMore">Xem thêm</Button>
       </HomeSection>
       <HomeSection className={classes.sectionSupport}>
         <p className={classes.titleSmall}>Hỗ trợ</p>
@@ -334,59 +335,6 @@ export default function Home() {
           onChange={onChange}
           className="trendTab"
         />
-        {/* <Row gutter={[28, 28]} style={{ width: "100%", marginBottom: "40px" }}>
-          <Swiper
-            slidesPerView={4}
-            spaceBetween={28}
-            hashNavigation={{
-              watchState: true,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            navigation={true}
-            modules={[Pagination, Navigation, HashNavigation]}
-            breakpoints={{
-              0: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 15,
-              },
-              1300: {
-                slidesPerView: 4,
-                spaceBetween: 28,
-              },
-            }}
-            className="solutionSwipper"
-          >
-            {SUPPORT_SECTION_LIST.map((item) => (
-              <SwiperSlide key={item.id} data-hash={item.id}>
-                <div className={classes.solutionSectionItem}>
-                  <Image
-                    src={SolutionImg1}
-                    alt=""
-                    style={{ width: "100%", objectFit: "cover" }}
-                  />
-                  <div className={classes.label}>
-                    {item.label}
-                    <ArrowRight />
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </Row> */}
         <Button className="btnPrimary btnSeeMore">Xem thêm</Button>
       </HomeSection>
       <HomeSection classContent={classes.contactSection}>
@@ -402,6 +350,7 @@ export default function Home() {
             <Form
               form={form}
               // onValuesChange={onFormLayoutChange}
+              onFinish={onFinish}
               layout="vertical"
               className="contactForm"
             >
@@ -445,7 +394,7 @@ export default function Home() {
               >
                 <Input placeholder="input placeholder" />
               </Form.Item>
-              <Form.Item label="Vấn đề giúp đỡ">
+              <Form.Item label="Vấn đề giúp đỡ" name={"isue"}>
                 <Input.TextArea showCount maxLength={100} />
               </Form.Item>
               <Form.Item>
@@ -453,6 +402,7 @@ export default function Home() {
                   type="primary"
                   className="btnPrimary"
                   style={{ width: 128, height: 48 }}
+                  htmlType="submit"
                 >
                   Gửi
                 </Button>
@@ -460,10 +410,15 @@ export default function Home() {
             </Form>
           </Col>
           <Col xl={13} lg={13} md={13} sm={13} xs={13}>
-            <Image src={ContactImg} alt="" style={{ width: "100%" }}></Image>
+            <Image
+              src={ContactImg}
+              alt=""
+              style={{ width: "100%", objectFit: "contain" }}
+            ></Image>
           </Col>
         </Row>
       </HomeSection>
+      <FloatButton.BackTop icon={<ArrowToTop />} className="btnBackToTop" />
     </div>
   );
 }
