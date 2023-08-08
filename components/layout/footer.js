@@ -17,9 +17,9 @@ export default function Footer() {
   const screens = useBreakpoint();
 
   return (
-    <div className="container">
-      <div className={classes.Footer}>
-        <Row gutter={[40, 20]} justify={"space-between"}>
+    <div className={classes.Footer}>
+      <div className="container">
+        <Row gutter={[40, 30]} justify={"space-between"}>
           <Col sm={12} md={6} lg={6} xs={24}>
             <p className={classes.title}>TẢI ỨNG DỤNG BOOKING STUDIO</p>
             <Row
@@ -28,7 +28,7 @@ export default function Footer() {
               justify={`${screens?.xs && "center"}`}
               gutter={screens?.xs ? [15, 0] : [12, 0]}
             >
-              <Col span={12}>
+              <Col xl={11} lg={24} md={24}>
                 <Link
                   href="https://play.google.com/store/apps/details?id=com.vnplus.bookingstudio"
                   target="_blank"
@@ -41,14 +41,14 @@ export default function Footer() {
                   />
                 </Link>
               </Col>
-              <Col span={12}>
+              <Col xl={12} lg={24}>
                 <Link
                   href="https://apps.apple.com/vn/app/booking-studio/id1563362722"
                   target="_blank"
                   className={classes.badgeIos}
                   rel="noreferrer"
                 >
-                  <AppStore height={"43px"} />
+                  <AppStore height={"40px"} />
                 </Link>
               </Col>
             </Row>
@@ -86,12 +86,18 @@ export default function Footer() {
                   Giới thiệu VNPLUS
                 </Link>
               </li>
-              <li className={classes.item}>
+              <li
+                className={classes.item}
+                style={screens.xs ? { textAlign: "center" } : {}}
+              >
                 <Link className={classes.item} href="/home/privacy-policy">
                   Chính sách bảo mật
                 </Link>
               </li>
-              <li className={classes.item}>
+              <li
+                className={classes.item}
+                style={screens.xs ? { textAlign: "center" } : {}}
+              >
                 <Link className={classes.item} href="/home/terms-use">
                   Điều khoản sử dụng
                 </Link>
@@ -141,11 +147,11 @@ export default function Footer() {
             <Image src={BCTVN} />
           </Col>
         </Row>
+        <p className={classes.copywrite}>
+          <CopyrightOutlined /> 2021 - Bản quyền thuộc công ty Cổ phần Công nghệ
+          và Đầu tư VNPLUS V2007
+        </p>
       </div>
-      <p className={classes.copywrite}>
-        <CopyrightOutlined /> 2021 - Bản quyền thuộc công ty Cổ phần Công nghệ
-        và Đầu tư VNPLUS V2007
-      </p>
     </div>
   );
 }

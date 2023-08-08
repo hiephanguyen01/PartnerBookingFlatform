@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ConfigProvider } from "antd";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,24 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <MainLayout>{children} </MainLayout>
+        <ConfigProvider
+          theme={{
+            token: {
+              // Seed Token
+              colorPrimary: "#e22828",
+            },
+            components: {
+              Tabs: {
+                colorPrimary: "#e22828",
+              },
+              Input: {
+                borderRadius: "6px",
+              },
+            },
+          }}
+        >
+          <MainLayout>{children} </MainLayout>
+        </ConfigProvider>
       </body>
     </html>
   );
