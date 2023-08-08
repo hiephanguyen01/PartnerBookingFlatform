@@ -338,8 +338,11 @@ export default function Home() {
         <Button className="btnPrimary btnSeeMore">Xem thêm</Button>
       </HomeSection>
       <HomeSection classContent={classes.contactSection}>
-        <Row style={{ width: "100%" }} gutter={73}>
-          <Col xl={11} lg={11} md={11} sm={11} xs={11}>
+        <Row
+          style={{ width: "100%" }}
+          gutter={{ xs: 0, sm: 0, md: 24, lg: 40, xl: 78 }}
+        >
+          <Col xl={11} lg={11} md={14} sm={24} xs={24}>
             <p className={classes.titleSmall}>Liên hệ</p>
             <Divider className={classes.divider} style={{ marginLeft: 16 }} />
             <h3
@@ -409,7 +412,7 @@ export default function Home() {
               </Form.Item>
             </Form>
           </Col>
-          <Col xl={13} lg={13} md={13} sm={13} xs={13}>
+          <Col xl={13} lg={13} md={10} sm={0} xs={0}>
             <Image
               src={ContactImg}
               alt=""
