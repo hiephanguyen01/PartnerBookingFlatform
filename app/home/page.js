@@ -1,8 +1,17 @@
 "use client";
-import { Button, Col, Divider, Form, Input, Row, Space, Tabs } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Form,
+  Image,
+  Input,
+  Row,
+  Space,
+  Tabs,
+} from "antd";
 import classes from "./home.module.scss";
 import AlignArrowHorizontal from "@/assets/svg/AlignArrowHorizontal";
-import Image from "next/image";
 import BannerImg from "@/assets/image/Banner.png";
 import HomeSection from "@/components/HomeSection/HomeSection";
 import Phone from "@/assets/svg/Phone";
@@ -15,7 +24,6 @@ import SupportIcon3 from "@/assets/svg/SupportSection/SupportIcon3";
 import SupportIcon4 from "@/assets/svg/SupportSection/SupportIcon4";
 import SupportIcon5 from "@/assets/svg/SupportSection/SupportIcon5";
 import SupportIcon6 from "@/assets/svg/SupportSection/SupportIcon6";
-import SolutionImg1 from "@/assets/image/SolutionImg1.png";
 import ContactImg from "@/assets/image/ContactImg.png";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -30,24 +38,27 @@ import ArrowRight from "@/assets/svg/SolutionSection/ArrowRight";
 import moment from "moment";
 import { FloatButton } from "antd/es";
 import ArrowToTop from "@/assets/svg/ArrowToTop";
+import SupportCard from "@/components/SupportCard";
+import SolutionCard from "@/components/SolutionCard";
+import TrendCard from "@/components/TrendCard";
 
 const SEARCH_SECTION_LIST = [
   {
     id: 0,
-    label: "Hỗ trợ",
+    title: "Hỗ trợ",
     icon: <Phone height={36} width={36} />,
     description: "Hỗ trợ đối tác sử dụng Booking Studio một cách hiệu quả nhất",
   },
   {
     id: 1,
-    label: "Giải pháp",
+    title: "Giải pháp",
     description:
       "Giúp đối tác dễ dàng tiếp cận khách hàng và đạt doanh thu cao",
     icon: <HeartOnHand />,
   },
   {
     id: 2,
-    label: "Xu hướng, tin tức",
+    title: "Xu hướng, tin tức",
     description: "Cập nhật xu hướng và tin tức về kinh doanh mới nhất",
     icon: <Promotion width={30} height={27} />,
   },
@@ -56,42 +67,42 @@ const SEARCH_SECTION_LIST = [
 const SUPPORT_SECTION_LIST = [
   {
     id: 0,
-    label: "Bước đầu với Booking Studio",
+    title: "Bước đầu với Booking Studio",
     icon: <SupportIcon1 />,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
   },
   {
     id: 1,
-    label: "Quản lý đơn đặt",
+    title: "Quản lý đơn đặt",
     icon: <SupportIcon2 />,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 2,
-    label: "Theo dõi, chỉnh sửa lịch và giá",
+    title: "Theo dõi, chỉnh sửa lịch và giá",
     icon: <SupportIcon3 />,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
   },
   {
     id: 3,
-    label: "Về hoa hồng, hóa đơn, thuế",
+    title: "Về hoa hồng, hóa đơn, thuế",
     icon: <SupportIcon4 />,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
   },
   {
     id: 4,
-    label: "Chính sách thanh toán cho khách hàng",
+    title: "Chính sách thanh toán cho khách hàng",
     icon: <SupportIcon5 />,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 5,
-    label: "Đánh giá của khách hàng",
+    title: "Đánh giá của khách hàng",
     icon: <SupportIcon6 />,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna.",
@@ -99,13 +110,13 @@ const SUPPORT_SECTION_LIST = [
 ];
 
 const TABS_LIST = [
-  { id: 0, label: "Tất cả" },
-  { id: 1, label: "Studio" },
-  { id: 2, label: "Makeup" },
-  { id: 3, label: "Chụp ảnh" },
-  { id: 4, label: "Người mẫu" },
-  { id: 5, label: "Trang phục" },
-  { id: 6, label: "Thiết bị" },
+  { id: 0, title: "Tất cả" },
+  { id: 1, title: "Studio" },
+  { id: 2, title: "Makeup" },
+  { id: 3, title: "Chụp ảnh" },
+  { id: 4, title: "Người mẫu" },
+  { id: 5, title: "Trang phục" },
+  { id: 6, title: "Thiết bị" },
 ];
 
 export default function Home() {
@@ -121,7 +132,7 @@ export default function Home() {
 
   const items = TABS_LIST.map((item) => ({
     key: item.id,
-    label: item.label,
+    title: item.title,
     children: (
       <Swiper
         slidesPerView={4}
@@ -160,22 +171,7 @@ export default function Home() {
       >
         {SUPPORT_SECTION_LIST.map((item) => (
           <SwiperSlide key={item.id} data-hash={item.id}>
-            <div className={classes.trendSectionItem}>
-              <Image
-                src={SolutionImg1}
-                alt=""
-                style={{ width: "30%", objectFit: "cover", height: "100%" }}
-              />
-              <div className={classes.content}>
-                <label>{item.label}</label>
-                <p>{item.description}</p>
-                <div className={classes.textBottom}>
-                  <span>Studio</span>
-                  <span className={classes.dot}></span>
-                  <span>{moment().format("DD/MM/YYYY")}</span>
-                </div>
-              </div>
-            </div>
+            <TrendCard item={item} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -234,7 +230,7 @@ export default function Home() {
                   {item.icon}
                 </div>
                 <div className={classes.content}>
-                  <label>{item.label}</label>
+                  <title>{item.title}</title>
                   <p>{item.description}</p>
                 </div>
                 <RightOutlined />
@@ -252,11 +248,7 @@ export default function Home() {
         <Row gutter={[28, 28]} style={{ width: "100%", marginBottom: "56px" }}>
           {SUPPORT_SECTION_LIST.map((item) => (
             <Col xl={8} lg={8} md={12} sm={24} xs={24} key={item.id}>
-              <div className={classes.supportSectionItem}>
-                <div className={classes.icon}>{item.icon}</div>
-                <label>{item.label}</label>
-                <p>{item.description}</p>
-              </div>
+              <SupportCard item={item} />
             </Col>
           ))}
         </Row>
@@ -306,17 +298,7 @@ export default function Home() {
           >
             {SUPPORT_SECTION_LIST.map((item) => (
               <SwiperSlide key={item.id} data-hash={item.id}>
-                <div className={classes.solutionSectionItem}>
-                  <Image
-                    src={SolutionImg1}
-                    alt=""
-                    style={{ width: "100%", objectFit: "cover" }}
-                  />
-                  <div className={classes.label}>
-                    {item.label}
-                    <ArrowRight />
-                  </div>
-                </div>
+                <SolutionCard item={item} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -337,6 +319,7 @@ export default function Home() {
         />
         <Button className="btnPrimary btnSeeMore">Xem thêm</Button>
       </HomeSection>
+
       <HomeSection classContent={classes.contactSection}>
         <Row style={{ width: "100%" }} gutter={73}>
           <Col xl={11} lg={11} md={11} sm={11} xs={11}>
@@ -357,7 +340,7 @@ export default function Home() {
               <Row gutter={22} justify={"space-between"}>
                 <Col span={12}>
                   <Form.Item
-                    label="Họ"
+                    title="Họ"
                     name={"lastName"}
                     rules={[
                       {
@@ -370,7 +353,7 @@ export default function Home() {
                 </Col>
                 <Col span={12}>
                   <Form.Item
-                    label="Tên"
+                    title="Tên"
                     name={"firstName"}
                     rules={[
                       {
@@ -383,7 +366,7 @@ export default function Home() {
                 </Col>
               </Row>
               <Form.Item
-                label="Email"
+                title="Email"
                 name={"email"}
                 rules={[
                   {
@@ -394,7 +377,7 @@ export default function Home() {
               >
                 <Input placeholder="input placeholder" />
               </Form.Item>
-              <Form.Item label="Vấn đề giúp đỡ" name={"isue"}>
+              <Form.Item title="Vấn đề giúp đỡ" name={"isue"}>
                 <Input.TextArea showCount maxLength={100} />
               </Form.Item>
               <Form.Item>

@@ -1,0 +1,65 @@
+.trendSectionItem {
+  cursor: pointer;
+  display: flex;
+  gap: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  height: 200px;
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 23px 0;
+
+    label {
+      color: #161616;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
+
+      height: 24px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* number of lines to show */
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    p {
+      color: #3f3f3f;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+
+      height: 80px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4; /* number of lines to show */
+      line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+
+    .textBottom {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      span {
+        color: #828282;
+        font-size: 14px;
+        font-weight: 400;
+      }
+      .dot {
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: #828282;
+      }
+    }
+  }
+  &:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  }
+}
