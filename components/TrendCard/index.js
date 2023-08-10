@@ -9,7 +9,7 @@ const TrendCard = ({ item }) => {
         preview={false}
         src="https://picsum.photos/seed/picsum/200/300"
         alt=""
-        style={{ width: "100%", objectFit: "cover", height: "100%" }}
+        style={{ width: "218px", objectFit: "cover", height: "100%" }}
       />
       <div className={classes.content}>
         <title>{item.title}</title>

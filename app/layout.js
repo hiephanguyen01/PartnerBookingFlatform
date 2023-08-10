@@ -2,7 +2,7 @@
 import MainLayout from "@/components/layout/layout";
 import { ConfigProvider } from "antd";
 import { Nunito } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 
 const nunito = Nunito({
   weight: ["400", "700"],

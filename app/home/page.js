@@ -1,46 +1,29 @@
 "use client";
-import {
-  Button,
-  Col,
-  Divider,
-  Form,
-  Image,
-  Input,
-  Row,
-  Space,
-  Tabs,
-} from "antd";
-import classes from "./home.module.scss";
-import AlignArrowHorizontal from "@/assets/svg/AlignArrowHorizontal";
 import BannerImg from "@/assets/image/Banner.png";
-import HomeSection from "@/components/HomeSection/HomeSection";
+import ContactImg from "@/assets/image/ContactImg.png";
+import AlignArrowHorizontal from "@/assets/svg/AlignArrowHorizontal";
+import HeartOnHand from "@/assets/svg/HeartOnHand";
 import Phone from "@/assets/svg/Phone";
 import Promotion from "@/assets/svg/Promotion";
-import { ArrowRightOutlined, RightOutlined } from "@ant-design/icons";
-import HeartOnHand from "@/assets/svg/HeartOnHand";
-import SupportIcon1 from "@/assets/svg/SupportSection/SupportIcon1";
-import SupportIcon2 from "@/assets/svg/SupportSection/SupportIcon2";
-import SupportIcon3 from "@/assets/svg/SupportSection/SupportIcon3";
-import SupportIcon4 from "@/assets/svg/SupportSection/SupportIcon4";
-import SupportIcon5 from "@/assets/svg/SupportSection/SupportIcon5";
-import SupportIcon6 from "@/assets/svg/SupportSection/SupportIcon6";
-import ContactImg from "@/assets/image/ContactImg.png";
 
+import HomeSection from "@/components/HomeSection/HomeSection";
+import { RightOutlined } from "@ant-design/icons";
+import { Button, Col, Divider, Form, Image, Input, Row, Tabs } from "antd";
+import classes from "./home.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 // import required modules
-import { Pagination, Navigation, HashNavigation } from "swiper/modules";
-import ArrowRight from "@/assets/svg/SolutionSection/ArrowRight";
-import moment from "moment";
-import { FloatButton } from "antd/es";
 import ArrowToTop from "@/assets/svg/ArrowToTop";
-import SupportCard from "@/components/SupportCard";
 import SolutionCard from "@/components/SolutionCard";
+import SupportCard from "@/components/SupportCard";
 import TrendCard from "@/components/TrendCard";
+import { FloatButton } from "antd/es";
+import { HashNavigation, Navigation, Pagination } from "swiper/modules";
+import { SUPPORT_SECTION_LIST } from "@/assets/templist";
 
 const SEARCH_SECTION_LIST = [
   {
@@ -61,51 +44,6 @@ const SEARCH_SECTION_LIST = [
     title: "Xu hướng, tin tức",
     description: "Cập nhật xu hướng và tin tức về kinh doanh mới nhất",
     icon: <Promotion width={30} height={27} />,
-  },
-];
-
-const SUPPORT_SECTION_LIST = [
-  {
-    id: 0,
-    title: "Bước đầu với Booking Studio",
-    icon: <SupportIcon1 />,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-  },
-  {
-    id: 1,
-    title: "Quản lý đơn đặt",
-    icon: <SupportIcon2 />,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: 2,
-    title: "Theo dõi, chỉnh sửa lịch và giá",
-    icon: <SupportIcon3 />,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-  },
-  {
-    id: 3,
-    title: "Về hoa hồng, hóa đơn, thuế",
-    icon: <SupportIcon4 />,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-  },
-  {
-    id: 4,
-    title: "Chính sách thanh toán cho khách hàng",
-    icon: <SupportIcon5 />,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: 5,
-    title: "Đánh giá của khách hàng",
-    icon: <SupportIcon6 />,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elitsed do eiusmod tempor incididunt ut labore et dolore magna.",
   },
 ];
 
