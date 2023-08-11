@@ -1,4 +1,3 @@
-"use client";
 import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
 import { Col, Drawer, Grid, Input, Menu, Row, Space } from "antd";
 import classes from "./header.module.scss";
@@ -97,7 +96,10 @@ export default function Header() {
                 left: 0,
                 width: "100%",
               }
-            : {}
+            : {
+                background: "#fff",
+                boxShadow: "4px 4px 10px 1px rgba(0, 0, 0, 0.02)",
+              }
         }
       >
         <div className="container">
