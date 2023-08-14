@@ -1,5 +1,5 @@
-import SolutionCard from "@/components/SolutionCard";
-import { partnerHubSolutionService } from "@/services/PartnerHubSolutionService";
+import SupportCard from "@/components/SupportCard";
+import { partnerHubTrendNewsService } from "@/services/PartnerHubTrendNewsService";
 import {
   DislikeOutlined,
   LikeOutlined,
@@ -9,12 +9,12 @@ import { Breadcrumb, Button, Col, Divider, Row } from "antd";
 import moment from "moment";
 import Link from "next/link";
 import classes from "./id.module.scss";
+import TrendCard from "@/components/TrendCard";
 
 const Detail = async ({ params }) => {
   try {
-    const { data } = await partnerHubSolutionService.getPartnerHubSolutionById2(
-      params.id
-    );
+    const { data } =
+      await partnerHubTrendNewsService.getPartnerHubTrendNewsById2(params.id);
     const regex = /(<([^>]+)>)/gi;
     const list = data.list.map((val) => ({
       ...val,
@@ -32,8 +32,8 @@ const Detail = async ({ params }) => {
                   href: "/home",
                 },
                 {
-                  title: "Giải pháp",
-                  href: "/home/solution",
+                  title: "Xu hướng, tin tức",
+                  href: "/home/trend",
                 },
                 {
                   title: data.data.title,
@@ -66,7 +66,7 @@ const Detail = async ({ params }) => {
             <h2>Các giải pháp khác</h2>
 
             <Link
-              href="/home/solution"
+              href="/home/trend"
               className={classes.more}
               style={{
                 cursor: "pointer",
@@ -81,8 +81,8 @@ const Detail = async ({ params }) => {
 
           <Row gutter={[28, 28]}>
             {list.map((item) => (
-              <Col key={item.id} md={6} sm={12} xs={24}>
-                <SolutionCard item={item} />
+              <Col key={item.id} md={12} sm={24} xs={24}>
+                <TrendCard item={item} />
               </Col>
             ))}
           </Row>

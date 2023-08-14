@@ -1,10 +1,9 @@
 "use client";
-import { SUPPORT_SECTION_LIST } from "@/assets/templist";
 import SolutionCard from "@/components/SolutionCard";
-import { Breadcrumb, Col, Pagination, Row } from "antd";
-import classes from "./solution.module.scss";
-import { useEffect, useState } from "react";
 import { partnerHubSolutionService } from "@/services/PartnerHubSolutionService";
+import { Breadcrumb, Col, Pagination, Row } from "antd";
+import { useEffect, useState } from "react";
+import classes from "./solution.module.scss";
 
 const Solution = () => {
   const [data, setData] = useState([]);
