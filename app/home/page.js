@@ -1,5 +1,15 @@
 "use client";
-import { Button, Col, Divider, Form, Input, Row, Space, Tabs } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Space,
+  Tabs,
+  message,
+} from "antd";
 import classes from "./home.module.scss";
 import AlignArrowHorizontal from "@/assets/svg/AlignArrowHorizontal";
 import Image from "next/image";
@@ -30,6 +40,8 @@ import ArrowRight from "@/assets/svg/SolutionSection/ArrowRight";
 import moment from "moment";
 import { FloatButton } from "antd/es";
 import ArrowToTop from "@/assets/svg/ArrowToTop";
+import { contactService } from "@/services/contactService";
+import { baseURL } from "@/utils/baseURL";
 
 const SEARCH_SECTION_LIST = [
   {
@@ -114,9 +126,17 @@ export default function Home() {
   const onChange = (key) => {
     console.log(key);
   };
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = async (values) => {
+    try {
+      await contactService.createMail({
+        ...values,
+        name: [values.lastName, values.firstName].join(" "),
+      });
+      message.success("Gửi tin nhắn thành công!");
+      form.resetFields();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const items = TABS_LIST.map((item) => ({
@@ -397,7 +417,7 @@ export default function Home() {
               >
                 <Input placeholder="input placeholder" />
               </Form.Item>
-              <Form.Item label="Vấn đề giúp đỡ" name={"isue"}>
+              <Form.Item label="Vấn đề giúp đỡ" name={"content"}>
                 <Input.TextArea showCount maxLength={100} />
               </Form.Item>
               <Form.Item>
