@@ -1,4 +1,18 @@
 "use client";
+import {
+  Button,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Space,
+  Tabs,
+  message,
+} from "antd";
+import classes from "./home.module.scss";
+import AlignArrowHorizontal from "@/assets/svg/AlignArrowHorizontal";
+import Image from "next/image";
 import BannerImg from "@/assets/image/Banner.png";
 import ContactImg from "@/assets/image/ContactImg.png";
 import AlignArrowHorizontal from "@/assets/svg/AlignArrowHorizontal";
@@ -18,13 +32,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 // import required modules
 import ArrowToTop from "@/assets/svg/ArrowToTop";
+import { contactService } from "@/services/contactService";
+import { baseURL } from "@/utils/baseURL";
 import SolutionCard from "@/components/SolutionCard";
 import SupportCard from "@/components/SupportCard";
 import TrendCard from "@/components/TrendCard";
 import { FloatButton } from "antd/es";
 import { HashNavigation, Navigation, Pagination } from "swiper/modules";
 import { SUPPORT_SECTION_LIST } from "@/assets/templist";
-
 const SEARCH_SECTION_LIST = [
   {
     id: 0,
@@ -63,9 +78,17 @@ export default function Home() {
   const onChange = (key) => {
     console.log(key);
   };
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = async (values) => {
+    try {
+      await contactService.createMail({
+        ...values,
+        name: [values.lastName, values.firstName].join(" "),
+      });
+      message.success("Gửi tin nhắn thành công!");
+      form.resetFields();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const items = TABS_LIST.map((item) => ({
@@ -259,8 +282,11 @@ export default function Home() {
       </HomeSection>
 
       <HomeSection classContent={classes.contactSection}>
-        <Row style={{ width: "100%" }} gutter={73}>
-          <Col xl={11} lg={11} md={11} sm={11} xs={11}>
+        <Row
+          style={{ width: "100%" }}
+          gutter={{ xs: 0, sm: 0, md: 24, lg: 40, xl: 78 }}
+        >
+          <Col xl={11} lg={11} md={14} sm={24} xs={24}>
             <p className={classes.titleSmall}>Liên hệ</p>
             <Divider className={classes.divider} style={{ marginLeft: 16 }} />
             <h3
@@ -315,7 +341,7 @@ export default function Home() {
               >
                 <Input placeholder="input placeholder" />
               </Form.Item>
-              <Form.Item title="Vấn đề giúp đỡ" name={"isue"}>
+              <Form.Item label="Vấn đề giúp đỡ" name={"content"}>
                 <Input.TextArea showCount maxLength={100} />
               </Form.Item>
               <Form.Item>
@@ -330,7 +356,7 @@ export default function Home() {
               </Form.Item>
             </Form>
           </Col>
-          <Col xl={13} lg={13} md={13} sm={13} xs={13}>
+          <Col xl={13} lg={13} md={10} sm={0} xs={0}>
             <Image
               src={ContactImg}
               alt=""
