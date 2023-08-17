@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
 :root {
   /* --max-width: 1100px;
   --border-radius: 12px;
@@ -73,7 +75,6 @@
   }
 } */
 
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap");
 * {
   font-family: "Nunito", sans-serif;
   box-sizing: border-box;
@@ -108,6 +109,10 @@ a {
 }
 
 .container {
+  margin: auto;
+  width: 100%;
+}
+.po-container {
   margin: auto;
   width: 100%;
 }
@@ -267,14 +272,22 @@ a {
   align-items: center;
 }
 
+span.ant-breadcrumb-link {
+  color: #e22828;
+  font-weight: bold;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
-    color-scheme: dark;
+    /* color-scheme: dark; */
   }
 }
 
-@media (min-width: 576px) {
+@media (max-width: 576px) {
   .container {
+    max-width: 95%;
+  }
+  .po-container {
     max-width: 95%;
   }
 }
@@ -283,16 +296,25 @@ a {
   .container {
     max-width: 95%;
   }
+  .po-container {
+    max-width: 95%;
+  }
 }
 
 @media (min-width: 768px) {
   .container {
     max-width: 90%;
   }
+  .po-container {
+    max-width: 671px;
+  }
 }
 
 @media (min-width: 1300px) {
   .container {
     max-width: 1300px;
+  }
+  .po-container {
+    max-width: 671px;
   }
 }

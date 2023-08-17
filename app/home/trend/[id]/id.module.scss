@@ -1,0 +1,39 @@
+.id {
+  .title {
+    color: #161616;
+    font-family: "Nunito";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .time {
+    margin-top: 16px;
+    margin-bottom: 21px;
+    width: fit-content;
+    color: #7b7b7b;
+    text-align: center;
+    font-family: "Nunito";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .ask {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .text {
+      color: #161616;
+      font-family: "Nunito";
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+  .more {
+    display: flex;
+    align-items: center;
+  }
+}
