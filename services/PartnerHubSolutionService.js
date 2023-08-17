@@ -19,6 +19,9 @@ class PartnerHubSolutionService extends BaseService {
   deletePartnerHubSolution = (data) => {
     return this.delete(`/api/partner-hub-solution`, data);
   };
+  getPartnerHubHome = () => {
+    return this.get(`/api/partner-hub-solution/home`);
+  };
 }
 
 export const partnerHubSolutionService = new PartnerHubSolutionService();
