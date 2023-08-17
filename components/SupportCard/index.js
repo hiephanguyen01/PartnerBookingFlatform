@@ -6,6 +6,7 @@ import { Image } from "antd";
 
 const SupportCard = ({ item }) => {
   const router = useRouter();
+  const regex = /(<([^>]+)>)/gi;
   return (
     <div
       className={classes.supportSectionItem}
@@ -15,7 +16,9 @@ const SupportCard = ({ item }) => {
         <Image src={item.image} preview={false} />
       </div>
       <label>{item.title}</label>
-      <p className={classes.content}>{item.content}</p>
+      <p className={classes.content}>
+        {item.content.replace(regex, "").replaceAll("&nbsp;", " ")}
+      </p>
     </div>
   );
 };

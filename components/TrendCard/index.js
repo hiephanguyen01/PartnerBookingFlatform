@@ -7,6 +7,7 @@ import { CATEGORIES } from "@/utils/category";
 import { useRouter } from "next/navigation";
 const TrendCard = ({ item }) => {
   const router = useRouter();
+  const regex = /(<([^>]+)>)/gi;
   return (
     <div
       className={classes.trendSectionItem}
@@ -20,7 +21,7 @@ const TrendCard = ({ item }) => {
       />
       <div className={classes.content}>
         <title>{item.title}</title>
-        <p>{item.content}</p>
+        <p>{item.content.replace(regex, "").replaceAll("&nbsp;", " ")}</p>
         <div className={classes.textBottom}>
           <span>
             {CATEGORIES.find((val) => val.id === item.category)?.label ||
