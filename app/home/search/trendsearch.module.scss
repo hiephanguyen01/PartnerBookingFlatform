@@ -1,0 +1,32 @@
+.trend {
+  .head {
+    background-size: cover; /* Scale image to cover entire container */
+    background-repeat: no-repeat;
+    background-position: center 65%;
+    padding: 60px 0;
+    width: 100%; /* Full width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      color: #161616;
+      font-family: "Nunito";
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      span {
+        color: #161616;
+        font-family: "Nunito";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+    }
+    .red {
+      color: red;
+      font-weight: bold;
+    }
+  }
+}

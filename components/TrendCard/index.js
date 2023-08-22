@@ -20,7 +20,7 @@ const TrendCard = ({ item }) => {
         style={{ width: "218px", objectFit: "cover", height: "100%" }}
       />
       <div className={classes.content}>
-        <title>{item.title}</title>
+        <label>{item.title}</label>
         <p>{item.content.replace(regex, "").replaceAll("&nbsp;", " ")}</p>
         <div className={classes.textBottom}>
           <span>

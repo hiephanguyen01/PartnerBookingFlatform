@@ -1,8 +1,8 @@
 import { BaseService } from "./baseService";
 
 class PartnerHubTrendNewsService extends BaseService {
-  getPartnerHubTrendNews = () => {
-    return this.get(`/api/partner-hub-trend-news`);
+  getPartnerHubTrendNews = (search = "") => {
+    return this.get(`/api/partner-hub-trend-news?search=${search}`);
   };
   getPartnerHubTrendNewsById = (id) => {
     return this.get(`/api/partner-hub-trend-news/${id}`);
