@@ -13,14 +13,7 @@ const Support = () => {
       try {
         const { data: res } =
           await partnerHubSupportService.getPartnerHubSupport();
-        const regex = /(<([^>]+)>)/gi;
-
-        setData(
-          res.data.map((val) => ({
-            ...val,
-            content: val.content.replace(regex, "").replaceAll("&nbsp;", " "),
-          }))
-        );
+        setData(res.data);
       } catch (error) {
         console.log("🚀 ~ file: page.js:17 ~ error:", error);
       }
