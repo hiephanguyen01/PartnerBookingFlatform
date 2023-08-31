@@ -22,6 +22,9 @@ class PartnerHubSolutionService extends BaseService {
   getPartnerHubHome = () => {
     return this.get(`/api/partner-hub-solution/home`);
   };
+  like = (id, data) => {
+    return this.post(`/api/partner-hub-solution/like/${id}`, data);
+  };
 }
 
 export const partnerHubSolutionService = new PartnerHubSolutionService();

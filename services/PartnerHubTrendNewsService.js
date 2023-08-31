@@ -19,6 +19,9 @@ class PartnerHubTrendNewsService extends BaseService {
   deletePartnerHubTrendNews = (data) => {
     return this.delete(`/api/partner-hub-trend-news`, data);
   };
+  like = (id, data) => {
+    return this.post(`/api/partner-hub-trend-news/like/${id}`, data);
+  };
 }
 
 export const partnerHubTrendNewsService = new PartnerHubTrendNewsService();

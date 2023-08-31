@@ -1,11 +1,8 @@
+import AskCustomer from "@/components/AskCustomer";
 import SupportCard from "@/components/SupportCard";
 import { partnerHubSupportService } from "@/services/PartnerHubSupportService";
-import {
-  DislikeOutlined,
-  LikeOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
-import { Breadcrumb, Button, Col, Divider, Row } from "antd";
+import { RightOutlined } from "@ant-design/icons";
+import { Breadcrumb, Col, Row } from "antd";
 import moment from "moment";
 import Link from "next/link";
 import classes from "./id.module.scss";
@@ -46,17 +43,7 @@ const Detail = async ({ params }) => {
             {moment(data.data.createdAt).format("DD/MM/YYYY")}
           </p>
           <div dangerouslySetInnerHTML={{ __html: data.data.content }} />
-          <Divider />
-          <div className={classes.ask}>
-            <p className={classes.text}>Bài viết có giúp ích cho bạn không</p>
-            <div>
-              <Button icon={<LikeOutlined />}>Có</Button>
-              <Button style={{ marginLeft: "10px" }} icon={<DislikeOutlined />}>
-                Không
-              </Button>
-            </div>
-          </div>
-          <Divider />
+          <AskCustomer id={params.id} variant="support" />
         </div>
         <div
           className="container"
