@@ -1,7 +1,5 @@
 import axios from "axios";
-// import { baseURL } from "../utils/baseURL";
-
-const baseURL = "http://localhost:3003";
+import { baseURL } from "../utils/baseURL";
 export class BaseService {
   put = (url, model) => {
     return axios({

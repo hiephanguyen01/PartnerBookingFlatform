@@ -42,7 +42,7 @@ const Support = () => {
         </div>
         <Row gutter={[28, 28]}>
           {data.map((item) => (
-            <Col lg={8} md={12} sm={24}>
+            <Col lg={8} md={12} sm={24} key={item.id}>
               <SupportCard item={item} key={item.id} />
             </Col>
           ))}

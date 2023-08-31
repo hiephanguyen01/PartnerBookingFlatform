@@ -19,6 +19,9 @@ class PartnerHubSupportService extends BaseService {
   deletePartnerHubSupport = (data) => {
     return this.delete(`/api/partner-hub-support`, data);
   };
+  like = (id, data) => {
+    return this.post(`/api/partner-hub-support/like/${id}`, data);
+  };
 }
 
 export const partnerHubSupportService = new PartnerHubSupportService();

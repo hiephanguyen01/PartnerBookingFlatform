@@ -12,9 +12,8 @@ import SlideShow from "@/components/SlideShow";
 import SupportCard from "@/components/SupportCard";
 import { partnerHubSolutionService } from "@/services/PartnerHubSolutionService";
 import { RightOutlined } from "@ant-design/icons";
-import { Button, Col, Divider, Row, Tabs } from "antd";
+import { Button, Col, Divider, Row, Tabs, Image } from "antd";
 import { FloatButton } from "antd/es";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import classes from "./home.module.scss";
 import { useRouter } from "next/navigation";
@@ -104,7 +103,8 @@ export default function Home() {
             </Col>
           </Row>
           <Image
-            src={BannerImg}
+            preview={false}
+            src={BannerImg.src}
             alt=""
             style={{ objectFit: "cover", width: "100%" }}
           />
