@@ -66,7 +66,7 @@ const MailForm = () => {
         <Input placeholder="Email" />
       </Form.Item>
       <Form.Item label="Vấn đề giúp đỡ" name={"content"}>
-        <Input.TextArea showCount maxLength={100} />
+        <Input.TextArea showCount maxLength={500} />
       </Form.Item>
       <Form.Item>
         <Button
