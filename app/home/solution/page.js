@@ -51,7 +51,7 @@ const Solution = () => {
         <Row gutter={[28, 28]}>
           {currentItems.map((item) => (
             <Col lg={6} md={8} sm={12} xs={24} key={item.id}>
-              <SolutionCard item={item} key={item.id} />
+              <SolutionCard item={item} />
             </Col>
           ))}
         </Row>

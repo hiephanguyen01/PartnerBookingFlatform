@@ -13,7 +13,7 @@ const SupportCard = ({ item }) => {
       onClick={() => router.push(`/home/support/${item.id}`)}
     >
       <div className={classes.icon}>
-        <Image src={item.image} preview={false} />
+        <Image alt="image" src={item.image} preview={false} />
       </div>
       <label>{item.title}</label>
       <p className={classes.content}>
