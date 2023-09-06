@@ -108,7 +108,15 @@ a {
   text-decoration: none;
 }
 
+.img-fluid {
+  width: 100%;
+  height: 448px;
+}
 .container {
+  margin: auto;
+  width: 100%;
+}
+.po-container {
   margin: auto;
   width: 100%;
 }
@@ -283,10 +291,16 @@ span.ant-breadcrumb-link {
   .container {
     max-width: 95%;
   }
+  .po-container {
+    max-width: 95%;
+  }
 }
 
 @media (min-width: 640px) {
   .container {
+    max-width: 95%;
+  }
+  .po-container {
     max-width: 95%;
   }
 }
@@ -295,10 +309,16 @@ span.ant-breadcrumb-link {
   .container {
     max-width: 90%;
   }
+  .po-container {
+    max-width: 671px;
+  }
 }
 
 @media (min-width: 1300px) {
   .container {
     max-width: 1300px;
+  }
+  .po-container {
+    max-width: 671px;
   }
 }

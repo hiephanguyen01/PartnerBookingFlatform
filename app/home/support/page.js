@@ -1,9 +1,25 @@
-import { SUPPORT_SECTION_LIST } from "@/assets/templist";
+"use client";
 import SupportCard from "@/components/SupportCard";
 import { Breadcrumb, Col, Row } from "antd";
 import classes from "./support.module.scss";
+import { partnerHubSupportService } from "@/services/PartnerHubSupportService";
+import { useEffect, useState } from "react";
 
 const Support = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data: res } =
+          await partnerHubSupportService.getPartnerHubSupport();
+        setData(res.data);
+      } catch (error) {
+        console.log("🚀 ~ file: page.js:17 ~ error:", error);
+      }
+    })();
+  }, []);
+
   return (
     <main style={{ minHeight: "100vh" }} className={classes.support}>
       <div className={classes.head}>
@@ -25,9 +41,9 @@ const Support = () => {
           />
         </div>
         <Row gutter={[28, 28]}>
-          {SUPPORT_SECTION_LIST.map((item) => (
-            <Col lg={8} md={12} sm={24}>
-              <SupportCard item={item} key={item.id} />
+          {data.map((item) => (
+            <Col lg={8} md={12} sm={24} key={item.id}>
+              <SupportCard item={item} />
             </Col>
           ))}
         </Row>

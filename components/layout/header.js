@@ -1,6 +1,5 @@
-"use client";
 import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
-import { Col, Drawer, Grid, Input, Menu, Row, Space } from "antd";
+import { Col, Drawer, Grid, Input, Menu, Row, Space, message } from "antd";
 import classes from "./header.module.scss";
 import { usePathname, useRouter } from "next/navigation";
 import { MenuOutlined, SearchOutlined } from "@ant-design/icons";
@@ -56,6 +55,17 @@ export default function Header() {
     router.push(`/home/${e.key}`);
   };
 
+  const onSearch = (e) => {
+    if (e.key === "Enter") {
+      const searchValue = e.target.value.trim();
+      if (searchValue === "") {
+        return message.error("Vui lòng nhập từ khoá tìm kiếm!");
+      }
+      router.push(`/home/search?search=${searchValue}`);
+      setShowSearch(false);
+    }
+  };
+
   return (
     <div
       className={showSearch && "fixed"}
@@ -97,7 +107,10 @@ export default function Header() {
                 left: 0,
                 width: "100%",
               }
-            : {}
+            : {
+                background: "#fff",
+                boxShadow: "4px 4px 10px 1px rgba(0, 0, 0, 0.02)",
+              }
         }
       >
         <div className="container">
@@ -211,6 +224,7 @@ export default function Header() {
                   borderRadius: 0,
                   width: screens?.xs ? "80%" : "50%",
                 }}
+                onKeyDown={onSearch}
               />
             </Row>
           )}

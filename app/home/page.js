@@ -2,29 +2,21 @@
 import BannerImg from "@/assets/image/Banner.png";
 import ContactImg from "@/assets/image/ContactImg.png";
 import AlignArrowHorizontal from "@/assets/svg/AlignArrowHorizontal";
+import ArrowToTop from "@/assets/svg/ArrowToTop";
 import HeartOnHand from "@/assets/svg/HeartOnHand";
 import Phone from "@/assets/svg/Phone";
 import Promotion from "@/assets/svg/Promotion";
-
 import HomeSection from "@/components/HomeSection/HomeSection";
-import { RightOutlined } from "@ant-design/icons";
-import { Button, Col, Divider, Form, Image, Input, Row, Tabs } from "antd";
-import classes from "./home.module.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-// import required modules
-import ArrowToTop from "@/assets/svg/ArrowToTop";
-import SolutionCard from "@/components/SolutionCard";
+import MailForm from "@/components/MailForm";
+import SlideShow from "@/components/SlideShow";
 import SupportCard from "@/components/SupportCard";
-import TrendCard from "@/components/TrendCard";
+import { partnerHubSolutionService } from "@/services/PartnerHubSolutionService";
+import { RightOutlined } from "@ant-design/icons";
+import { Button, Col, Divider, Row, Tabs, Image } from "antd";
 import { FloatButton } from "antd/es";
-import { HashNavigation, Navigation, Pagination } from "swiper/modules";
-import { SUPPORT_SECTION_LIST } from "@/assets/templist";
-
+import { useEffect, useState } from "react";
+import classes from "./home.module.scss";
+import { useRouter } from "next/navigation";
 const SEARCH_SECTION_LIST = [
   {
     id: 0,
@@ -58,63 +50,29 @@ const TABS_LIST = [
 ];
 
 export default function Home() {
-  const [form] = Form.useForm();
-
+  const router = useRouter();
+  const [data, setDate] = useState({});
   const onChange = (key) => {
     console.log(key);
-  };
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
   };
 
   const items = TABS_LIST.map((item) => ({
     key: item.id,
     title: item.title,
-    children: (
-      <Swiper
-        slidesPerView={4}
-        spaceBetween={28}
-        hashNavigation={{
-          watchState: true,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation, HashNavigation]}
-        breakpoints={{
-          0: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-          },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-          },
-          1024: {
-            slidesPerView: 2,
-            spaceBetween: 15,
-          },
-          1300: {
-            slidesPerView: 2,
-            spaceBetween: 28,
-          },
-        }}
-        className="trendSwipper"
-      >
-        {SUPPORT_SECTION_LIST.map((item) => (
-          <SwiperSlide key={item.id} data-hash={item.id}>
-            <TrendCard item={item} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    ),
+    children: <SlideShow type="TrendCard" data={data?.trends} />,
   }));
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data: res } =
+          await partnerHubSolutionService.getPartnerHubHome();
+        setDate(res);
+      } catch (error) {
+        console.log("🚀 ~ file: page.js:72 ~ error:", error);
+      }
+    })();
+  }, []);
 
   return (
     <div className={classes.home}>
@@ -145,7 +103,8 @@ export default function Home() {
             </Col>
           </Row>
           <Image
-            src={BannerImg}
+            preview={false}
+            src={BannerImg.src}
             alt=""
             style={{ objectFit: "cover", width: "100%" }}
           />
@@ -184,13 +143,18 @@ export default function Home() {
           BẠN CẦN HỖ TRỢ VỀ VẤN ĐỀ GÌ?
         </h3>
         <Row gutter={[28, 28]} style={{ width: "100%", marginBottom: "56px" }}>
-          {SUPPORT_SECTION_LIST.map((item) => (
+          {data?.supports?.map((item) => (
             <Col xl={8} lg={8} md={12} sm={24} xs={24} key={item.id}>
               <SupportCard item={item} />
             </Col>
           ))}
         </Row>
-        <Button className="btnPrimary btnSeeMore">Xem thêm</Button>
+        <Button
+          className="btnPrimary btnSeeMore"
+          onClick={() => router.push("/home/support")}
+        >
+          Xem thêm
+        </Button>
       </HomeSection>
       <HomeSection className={classes.sectionSolution}>
         <p className={classes.titleSmall}>Giải pháp</p>
@@ -199,49 +163,14 @@ export default function Home() {
           MỘT SỐ GIẢI PHÁP CÓ ÍCH CHO BẠN
         </h3>
         <Row gutter={[28, 28]} style={{ width: "100%", marginBottom: "40px" }}>
-          <Swiper
-            slidesPerView={4}
-            spaceBetween={28}
-            hashNavigation={{
-              watchState: true,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            navigation={true}
-            modules={[Pagination, Navigation, HashNavigation]}
-            breakpoints={{
-              0: {
-                slidesPerView: 1,
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 15,
-              },
-              1300: {
-                slidesPerView: 4,
-                spaceBetween: 28,
-              },
-            }}
-            className="solutionSwipper"
-          >
-            {SUPPORT_SECTION_LIST.map((item) => (
-              <SwiperSlide key={item.id} data-hash={item.id}>
-                <SolutionCard item={item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <SlideShow type="SolutionCard" data={data?.solutions} />
         </Row>
-        <Button className="btnPrimary btnSeeMore">Xem thêm</Button>
+        <Button
+          className="btnPrimary btnSeeMore"
+          onClick={() => router.push("/home/solution")}
+        >
+          Xem thêm
+        </Button>
       </HomeSection>
       <HomeSection className={classes.sectionTrend}>
         <p className={classes.titleSmall}>Xu hướng, tin tức</p>
@@ -255,12 +184,20 @@ export default function Home() {
           onChange={onChange}
           className="trendTab"
         />
-        <Button className="btnPrimary btnSeeMore">Xem thêm</Button>
+        <Button
+          className="btnPrimary btnSeeMore"
+          onClick={() => router.push("/home/trend")}
+        >
+          Xem thêm
+        </Button>
       </HomeSection>
 
       <HomeSection classContent={classes.contactSection}>
-        <Row style={{ width: "100%" }} gutter={73}>
-          <Col xl={11} lg={11} md={11} sm={11} xs={11}>
+        <Row
+          style={{ width: "100%" }}
+          gutter={{ xs: 0, sm: 0, md: 24, lg: 40, xl: 78 }}
+        >
+          <Col xl={11} lg={11} md={14} sm={24} xs={24}>
             <p className={classes.titleSmall}>Liên hệ</p>
             <Divider className={classes.divider} style={{ marginLeft: 16 }} />
             <h3
@@ -268,69 +205,9 @@ export default function Home() {
             >
               CHÚNG TÔI CÓ THỂ GIÚP GÌ CHO BẠN?
             </h3>
-            <Form
-              form={form}
-              // onValuesChange={onFormLayoutChange}
-              onFinish={onFinish}
-              layout="vertical"
-              className="contactForm"
-            >
-              <Row gutter={22} justify={"space-between"}>
-                <Col span={12}>
-                  <Form.Item
-                    title="Họ"
-                    name={"lastName"}
-                    rules={[
-                      {
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input placeholder="input placeholder" />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    title="Tên"
-                    name={"firstName"}
-                    rules={[
-                      {
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input placeholder="input placeholder" />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Form.Item
-                title="Email"
-                name={"email"}
-                rules={[
-                  {
-                    type: "email",
-                    required: true,
-                  },
-                ]}
-              >
-                <Input placeholder="input placeholder" />
-              </Form.Item>
-              <Form.Item title="Vấn đề giúp đỡ" name={"isue"}>
-                <Input.TextArea showCount maxLength={100} />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  className="btnPrimary"
-                  style={{ width: 128, height: 48 }}
-                  htmlType="submit"
-                >
-                  Gửi
-                </Button>
-              </Form.Item>
-            </Form>
+            <MailForm />
           </Col>
-          <Col xl={13} lg={13} md={13} sm={13} xs={13}>
+          <Col xl={13} lg={13} md={10} sm={0} xs={0}>
             <Image
               src={ContactImg}
               alt=""

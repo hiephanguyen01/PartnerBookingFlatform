@@ -3,13 +3,18 @@ import React from "react";
 import classes from "./solutioncard.module.scss";
 import ArrowRight from "@/assets/svg/SolutionSection/ArrowRight";
 import { Image } from "antd";
+import { useRouter } from "next/navigation";
 
 const SolutionCard = ({ item }) => {
+  const router = useRouter();
   return (
-    <div className={classes.solutionSectionItem}>
+    <div
+      className={classes.solutionSectionItem}
+      onClick={() => router.push(`/home/solution/${item.id}`)}
+    >
       <Image
         preview={false}
-        src="https://picsum.photos/seed/picsum/200/300"
+        src={item.image}
         alt=""
         style={{
           width: "100%",

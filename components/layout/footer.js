@@ -144,7 +144,7 @@ export default function Footer() {
             >
               Công ty Cổ phần Công nghệ và Đầu tư VNPLUS
             </p>
-            <Image src={BCTVN} />
+            <Image alt="image" src={BCTVN} />
           </Col>
         </Row>
         <p className={classes.copywrite}>

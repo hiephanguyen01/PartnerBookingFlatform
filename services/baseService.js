@@ -1,6 +1,5 @@
 import axios from "axios";
 import { baseURL } from "../utils/baseURL";
-
 export class BaseService {
   put = (url, model) => {
     return axios({

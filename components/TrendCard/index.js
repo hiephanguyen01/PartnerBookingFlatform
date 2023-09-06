@@ -1,23 +1,34 @@
+"use client";
 import { Image } from "antd";
 import React from "react";
 import classes from "./trendcard.module.scss";
 import moment from "moment";
+import { CATEGORIES } from "@/utils/category";
+import { useRouter } from "next/navigation";
 const TrendCard = ({ item }) => {
+  const router = useRouter();
+  const regex = /(<([^>]+)>)/gi;
   return (
-    <div className={classes.trendSectionItem}>
+    <div
+      className={classes.trendSectionItem}
+      onClick={() => router.push(`/home/trend/${item.id}`)}
+    >
       <Image
         preview={false}
-        src="https://picsum.photos/seed/picsum/200/300"
+        src={item.image}
         alt=""
         style={{ width: "218px", objectFit: "cover", height: "100%" }}
       />
       <div className={classes.content}>
-        <title>{item.title}</title>
-        <p>{item.description}</p>
+        <label>{item.title}</label>
+        <p>{item.content.replace(regex, "").replaceAll("&nbsp;", " ")}</p>
         <div className={classes.textBottom}>
-          <span>Studio</span>
+          <span>
+            {CATEGORIES.find((val) => val.id === item.category)?.label ||
+              "Studio"}
+          </span>
           <span className={classes.dot}></span>
-          <span>{moment().format("DD/MM/YYYY")}</span>
+          <span>{moment(item.createdAt).format("DD/MM/YYYY")}</span>
         </div>
       </div>
     </div>

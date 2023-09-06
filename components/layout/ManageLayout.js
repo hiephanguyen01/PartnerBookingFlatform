@@ -101,7 +101,7 @@ export default function ManageLayout(props) {
         router.push("/complete-register");
       }
     }
-  }, [user, isFetching]);
+  }, [user, isFetching, router]);
 
   useEffect(() => {
     setDefaultSelected(router.pathname);
