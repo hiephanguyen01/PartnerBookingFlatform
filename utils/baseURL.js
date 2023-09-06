@@ -1,1 +1,1 @@
-export const baseURL = "https://am.bookingstudio.vn";
+export const baseURL = "http://localhost:3003";
