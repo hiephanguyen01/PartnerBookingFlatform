@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import classes from "./layout.module.scss";
 import Header from "./header";
 import Footer from "./footer";
 

@@ -1,3 +1,4 @@
+"use client";
 import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
 import { CopyrightOutlined } from "@ant-design/icons";
 import { Col, Grid, QRCode, Row } from "antd";
