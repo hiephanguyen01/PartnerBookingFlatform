@@ -1,3 +1,4 @@
+"use client";
 import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
 import { Col, Drawer, Grid, Input, Menu, Row, Space, message } from "antd";
 import classes from "./header.module.scss";

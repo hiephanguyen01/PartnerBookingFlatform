@@ -1,5 +1,5 @@
 "use client";
-import MainLayout from "@/components/layout/layout";
+import MainLayout from "@/components/layout/MainLayout";
 import { ConfigProvider } from "antd";
 import { Nunito } from "next/font/google";
 import "./globals.scss";
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
             },
           }}
         >
-          <MainLayout>{children} </MainLayout>
+          <>{children} </>
         </ConfigProvider>
       </body>
     </html>
