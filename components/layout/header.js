@@ -180,9 +180,9 @@ export default function Header() {
               </Space>
             </Col>
             <Drawer
-              title={
-                pathname.split("/")[1] === "" ? "Home" : pathname.split("/")[1]
-              }
+              // title={
+              //   pathname.split("/")[1] === "" ? "Home" : pathname.split("/")[1]
+              // }
               placement={"right"}
               closable={false}
               onClose={onClose}
@@ -190,10 +190,12 @@ export default function Header() {
               key={"right"}
               width={300}
               className="drawerHeader"
+              style={{ paddingTop: "50px" }}
             >
               <Menu
                 onClick={handleClickMenu}
                 style={{ width: 256 }}
+                title={<></>}
                 defaultSelectedKeys={HEADER_NAV.filter((item) => {
                   if (
                     pathname.split("/")[1] !== "" &&
@@ -219,11 +221,12 @@ export default function Header() {
                 placeholder="Tìm kiếm?"
                 prefix={<SearchOutlined />}
                 className={classes.inputSearch}
-                bordered={false}
+                // bordered={false}
+                size="large"
                 style={{
-                  borderBottom: "1px solid #e7e7e7",
-                  borderRadius: 0,
-                  width: screens?.xs ? "80%" : "50%",
+                  border: "1px solid #e7e7e7",
+                  // borderRadius: 0,
+                  width: screens?.xs ? "96%" : "50%",
                 }}
                 onKeyDown={onSearch}
               />

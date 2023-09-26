@@ -58,7 +58,7 @@ export default function Home() {
 
   const items = TABS_LIST.map((item) => ({
     key: item.id,
-    title: item.title,
+    label: item.title,
     children: <SlideShow type="TrendCard" data={data?.trends} />,
   }));
 
@@ -81,23 +81,29 @@ export default function Home() {
           className={"container " + classes.wrapContent}
           style={{ textAlign: "center" }}
         >
-          <h1>Chúng tôi sẽ giúp bạn đạt doanh thu cao nhất có thể</h1>
-          <p className={classes.description}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+          <div className={classes.titleBanner} style={{ padding: "0 10px" }}>
+            <h1>Chúng tôi sẽ giúp bạn đạt doanh thu cao nhất có thể</h1>
+            <p className={classes.description}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
           <Row
+            className={classes.bannerItem}
             style={{ marginBottom: "80px" }}
             gutter={[20, 20]}
             justify={{ xs: "center" }}
           >
             <Col>
-              <Button className="header_btn_join" type="primary">
+              <Button
+                className={` header_btn_join ${classes.btn}`}
+                type="primary"
+              >
                 Tham gia Booking Studio
               </Button>
             </Col>
             <Col>
-              <Button danger className="header_btn_direction">
+              <Button danger className={` header_btn_direction ${classes.btn}`}>
                 Đến trang quản lý <AlignArrowHorizontal />
               </Button>
             </Col>
@@ -115,7 +121,16 @@ export default function Home() {
         <h3 className={[classes.searchTitle, classes.sectionTitle].join(" ")}>
           BẠN CẦN TÌM GÌ?
         </h3>
-        <Row style={{ width: "100%" }} gutter={[20, 20]} justify={"center"}>
+        <Row
+          style={{
+            "@media (max-width: 575px)": {
+              margin: "0", // Set left and right margins to 0
+              padding: "18px 0", // Set top and bottom padding to 18px
+            },
+          }}
+          gutter={[20, 20]}
+          justify={"center"}
+        >
           {SEARCH_SECTION_LIST.map((item) => (
             <Col xl={8} lg={12} md={12} sm={24} xs={24} key={item.id}>
               <div className={classes.searchSectionItem}>
@@ -142,7 +157,15 @@ export default function Home() {
         <h3 className={[classes.supportTitle, classes.sectionTitle].join(" ")}>
           BẠN CẦN HỖ TRỢ VỀ VẤN ĐỀ GÌ?
         </h3>
-        <Row gutter={[28, 28]} style={{ width: "100%", marginBottom: "56px" }}>
+        <Row
+          gutter={[28, 28]}
+          style={{
+            "@media (max-width: 575px)": {
+              margin: "0", // Set left and right margins to 0
+              padding: "18px 0", // Set top and bottom padding to 18px
+            },
+          }}
+        >
           {data?.supports?.map((item) => (
             <Col xl={8} lg={8} md={12} sm={24} xs={24} key={item.id}>
               <SupportCard item={item} />
@@ -150,6 +173,7 @@ export default function Home() {
           ))}
         </Row>
         <Button
+          style={{ marginTop: "50px" }}
           className="btnPrimary btnSeeMore"
           onClick={() => router.push("/home/support")}
         >
@@ -193,23 +217,41 @@ export default function Home() {
       </HomeSection>
 
       <HomeSection classContent={classes.contactSection}>
+        <p className={[classes.titleSmall, classes.titleSpec].join(" ")}>
+          Liên hệ
+        </p>
+
+        <h3
+          className={[
+            classes.contactTitle,
+            classes.sectionTitle,
+            classes.titleContactMobile,
+          ].join(" ")}
+        >
+          CHÚNG TÔI CÓ THỂ GIÚP GÌ CHO BẠN?
+        </h3>
+
         <Row
-          style={{ width: "100%" }}
+          style={{ width: "100%", flexWrap: "wrap-reverse" }}
+          align={"center"}
           gutter={{ xs: 0, sm: 0, md: 24, lg: 40, xl: 78 }}
         >
           <Col xl={11} lg={11} md={14} sm={24} xs={24}>
-            <p className={classes.titleSmall}>Liên hệ</p>
-            <Divider className={classes.divider} style={{ marginLeft: 16 }} />
+            {/* <Divider className={classes.divider} style={{ marginLeft: 16 }} /> */}
             <h3
-              className={[classes.contactTitle, classes.sectionTitle].join(" ")}
+              className={[
+                classes.contactTitle,
+                classes.sectionTitle,
+                classes.titleContact,
+              ].join(" ")}
             >
               CHÚNG TÔI CÓ THỂ GIÚP GÌ CHO BẠN?
             </h3>
             <MailForm />
           </Col>
-          <Col xl={13} lg={13} md={10} sm={0} xs={0}>
+          <Col xl={13} lg={13} md={10}>
             <Image
-              src={ContactImg}
+              src={ContactImg.src}
               alt=""
               style={{ width: "100%", objectFit: "contain" }}
             ></Image>

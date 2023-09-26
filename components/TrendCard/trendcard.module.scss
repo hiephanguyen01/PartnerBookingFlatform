@@ -46,9 +46,10 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 14px;
       span {
         color: #828282;
-        font-size: 14px;
+
         font-weight: 400;
       }
       .dot {
@@ -62,5 +63,30 @@
   }
   &:hover {
     box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  }
+}
+
+@media (max-width: 576px) {
+  .trendSectionItem {
+    height: 122px;
+    img {
+      width: 136px !important;
+    }
+    .content {
+      padding: 15px 0;
+      label {
+        font-size: 16px;
+      }
+      p {
+        height: 42px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .textBottom {
+        font-size: 12px;
+      }
+    }
   }
 }

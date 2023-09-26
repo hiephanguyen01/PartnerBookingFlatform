@@ -15,17 +15,12 @@ const SolutionCard = ({ item }) => {
       <Image
         preview={false}
         src={item.image}
+        className={classes.image}
         alt=""
-        style={{
-          width: "100%",
-          objectFit: "cover",
-          height: "196px",
-          borderRadius: "8px",
-        }}
       />
       <div className={classes.title}>
-        {item.title}
-        <ArrowRight />
+        <p> {item.title}</p>
+        {/* <ArrowRight /> */}
       </div>
     </div>
   );
