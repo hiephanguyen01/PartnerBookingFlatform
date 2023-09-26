@@ -37,6 +37,8 @@
     color: #161616;
     font-size: 24px;
     font-weight: 800;
+    // text-align: center;
+    // padding: 0 10px;
   }
 
   .searchTitle {
@@ -123,11 +125,30 @@
       }
     }
   }
+  .titleContactMobile {
+    display: none;
+  }
 
   .contactSection {
     align-items: flex-start !important;
     .contactTitle {
       margin: 20px 0 36px;
+    }
+    .titleSpec {
+      position: relative;
+      display: block;
+      color: #e22828;
+      padding-bottom: 5px;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 2px;
+        background: #e22828;
+        bottom: 0;
+        left: 50%;
+        margin-left: -10px;
+      }
     }
 
     // .contactSectionItem {
@@ -146,14 +167,44 @@
   }
 }
 
-@media (min-width: 576px) {
-  .wrapContent {
-    h1 {
-      width: 100%;
+@media (max-width: 576px) {
+  .home {
+    .banner {
+      .wrapContent {
+        h1 {
+          width: 100%;
+          font-size: 20px;
+        }
+        .description {
+          width: 100%;
+          font-size: 12px;
+        }
+      }
     }
-    .description {
-      width: 100%;
+  }
+  .bannerItem {
+    margin-bottom: 40px;
+  }
+  .btn {
+    width: 208px;
+    height: 43px;
+    span {
+      font-size: 14px;
     }
+  }
+  .sectionTitle {
+    text-align: center;
+    // padding: 0 10px;
+  }
+  .titleContact {
+    display: none;
+  }
+  .titleSpec {
+    margin: auto;
+  }
+  .titleContactMobile {
+    display: block !important;
+    margin: 20px auto;
   }
 }
 
@@ -163,29 +214,35 @@
       width: 100%;
     }
     .description {
-      width: 90%;
+      // width: 90%;
     }
   }
 }
 
 @media (min-width: 768px) {
   .wrapContent {
+    .titleBanner {
+      padding: 0 100px !important;
+    }
     h1 {
-      width: 70%;
+      // width: 70%;
     }
     .description {
-      width: 60%;
+      // width: 60%;
     }
   }
 }
 
 @media (min-width: 1300px) {
   .wrapContent {
+    .titleBanner {
+      padding: 0 200px !important;
+    }
     h1 {
-      width: 60%;
+      // width: 60%;
     }
     .description {
-      width: 50%;
+      // width: 50%;
     }
   }
 }

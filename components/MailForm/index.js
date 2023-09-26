@@ -65,14 +65,18 @@ const MailForm = () => {
       >
         <Input placeholder="Email" />
       </Form.Item>
-      <Form.Item label="Vấn đề giúp đỡ" name={"content"}>
-        <Input.TextArea showCount maxLength={500} />
+      <Form.Item name={"content"}>
+        <Input.TextArea
+          placeholder="Vấn đề giúp đỡ"
+          showCount
+          maxLength={500}
+        />
       </Form.Item>
-      <Form.Item>
+      <Form.Item style={{ textAlign: "center" }}>
         <Button
           type="primary"
           className="btnPrimary"
-          style={{ width: 128, height: 48 }}
+          style={{ width: 128, height: 48, textAlign: "center" }}
           htmlType="submit"
         >
           Gửi

@@ -6,3 +6,9 @@
     align-items: center;
   }
 }
+
+@media (max-width: 654px) {
+  .section {
+    padding: 40px 0;
+  }
+}
