@@ -1,0 +1,16 @@
+.login {
+  .main {
+    margin: 0 144px !important;
+  }
+  .sub {
+    margin-left: 50px;
+  }
+  @media only screen and (max-width: 600px) {
+    .main {
+      margin: 0 10px !important;
+    }
+    .sub {
+      margin-left: 0px;
+    }
+  }
+}

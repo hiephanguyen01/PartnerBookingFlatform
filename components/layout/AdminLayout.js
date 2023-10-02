@@ -6,17 +6,22 @@ import {
   DotChartOutlined,
   FileImageOutlined,
   LikeOutlined,
+  LoginOutlined,
   MessageOutlined,
   PoundCircleOutlined,
   ProjectOutlined,
   SnippetsOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Layout, Menu, theme } from "antd";
+import { Avatar, Button, Dropdown, Layout, Menu, theme } from "antd";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import PrivateRoute from "../ProtectedRoute/ProtectedRoute";
+import { logOut } from "@/store/action/userAction";
 const { Header, Content, Footer, Sider } = Layout;
-const items = [
+const items2 = [
   {
     label: "Dashboard",
     icon: <DotChartOutlined />,
@@ -55,12 +60,23 @@ const items = [
 ];
 
 const AdminLayout = ({ children }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.userReducer.user);
+  const router = useRouter();
+
   const [collapsed, setCollapsed] = useState(false);
   const [time, setTime] = useState();
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const items = [
+    {
+      label: <a onClick={() => dispatch(logOut(router))}>Đăng xuất</a>,
+      key: "0",
+      icon: <LoginOutlined />,
+    },
+  ];
 
   useEffect(() => {
     const timee = setTimeout(() => {
@@ -71,82 +87,106 @@ const AdminLayout = ({ children }) => {
       clearTimeout(timee);
     };
   }, [time]);
+
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <Sider
-        theme="light"
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
+    <PrivateRoute>
+      <Layout
+        style={{
+          minHeight: "100vh",
+        }}
       >
-        <div
-          style={{
-            padding: "16px 16px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <LogoHeaderIcon />
-        </div>
-        <Menu
+        <Sider
           theme="light"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
-      </Sider>
-      <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "end",
-          }}
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
         >
-          <p>{time}</p>
-          <p
+          <div
             style={{
-              margin: "0 24px",
-              height: "40px",
-              width: "1px",
-              backgroundColor: "#CACACA",
+              padding: "16px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          ></p>
-          <Button style={{ marginRight: "24px" }} icon={<MessageOutlined />} />
-          <Button icon={<BellOutlined />} />
-          <p
-            style={{
-              margin: "0 24px",
-              height: "40px",
-              width: "1px",
-              backgroundColor: "#CACACA",
-            }}
-          ></p>
-          <p>
-            Hello, <span style={{ fontWeight: "bold" }}>Baby</span>
-          </p>
-          <Avatar
-            style={{ margin: " 0 24px 0 16px " }}
-            size="large"
-            icon={<UserOutlined />}
+          >
+            <LogoHeaderIcon />
+          </div>
+          <Menu
+            theme="light"
+            defaultSelectedKeys={["1"]}
+            mode="inline"
+            items={items2}
           />
-        </Header>
-        <Content
-          style={{
-            margin: "16px 16px",
-          }}
-        >
-          {children}
-        </Content>
+        </Sider>
+        <Layout>
+          <Header
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end",
+            }}
+          >
+            <p>{time}</p>
+            <p
+              style={{
+                margin: "0 24px",
+                height: "40px",
+                width: "1px",
+                backgroundColor: "#CACACA",
+              }}
+            ></p>
+            <Button
+              style={{ marginRight: "24px" }}
+              icon={<MessageOutlined />}
+            />
+            <Button icon={<BellOutlined />} />
+            <p
+              style={{
+                margin: "0 24px",
+                height: "40px",
+                width: "1px",
+                backgroundColor: "#CACACA",
+              }}
+            ></p>
+            <Dropdown
+              menu={{
+                items,
+              }}
+              trigger={["click"]}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <p>
+                  Hello,{" "}
+                  <span style={{ fontWeight: "bold" }}>
+                    {user?.PartnerName}
+                  </span>
+                </p>
+                <Avatar
+                  style={{ margin: " 0 24px 0 16px " }}
+                  size="large"
+                  icon={<UserOutlined />}
+                />
+              </div>
+            </Dropdown>
+          </Header>
+          <Content
+            style={{
+              margin: "16px 16px",
+            }}
+          >
+            {children}
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </PrivateRoute>
   );
 };
 export default AdminLayout;
