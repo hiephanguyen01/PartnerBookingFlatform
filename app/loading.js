@@ -1,7 +1,7 @@
-import React from "react";
+import LoadingCPN from "@/components/Loading/Loading";
 
 const Loading = () => {
-  return <h1>Loading...</h1>;
+  return <LoadingCPN />;
 };
 
 export default Loading;
