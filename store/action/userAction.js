@@ -22,9 +22,20 @@ export const Login = (dataLogin) => async (dispatch) => {
     const { data } = await authService.login(dataLogin);
     dispatch({ type: SET_USER, payload: data.user });
     localStorage.setItem("token", data.token);
-    console.log("first");
   } catch (error) {
     message.error("Tên đăng nhập hoặc mật khẩu không đúng!");
+    console.log(error);
+  }
+  dispatch({ type: SET_LOADING, payload: false });
+};
+export const register = (registerData) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_LOADING, payload: true });
+    const { data } = await authService.register(registerData);
+    dispatch({ type: SET_USER, payload: data.user });
+    localStorage.setItem("token", data.token);
+  } catch (error) {
+    message.error("Vui lòng thử lại sau!");
     console.log(error);
   }
   dispatch({ type: SET_LOADING, payload: false });

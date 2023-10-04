@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "../ProtectedRoute/ProtectedRoute";
 import { logOut } from "@/store/action/userAction";
+import HookupProvider from "../HookupProvider";
 const { Header, Content, Footer, Sider } = Layout;
 const items2 = [
   {
@@ -89,104 +90,106 @@ const AdminLayout = ({ children }) => {
   }, [time]);
 
   return (
-    <PrivateRoute>
-      <Layout
-        style={{
-          minHeight: "100vh",
-        }}
-      >
-        <Sider
-          theme="light"
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
+    <HookupProvider>
+      <PrivateRoute>
+        <Layout
+          style={{
+            minHeight: "100vh",
+          }}
         >
-          <div
-            style={{
-              padding: "16px 16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <LogoHeaderIcon />
-          </div>
-          <Menu
+          <Sider
             theme="light"
-            defaultSelectedKeys={["1"]}
-            mode="inline"
-            items={items2}
-          />
-        </Sider>
-        <Layout>
-          <Header
-            style={{
-              padding: 0,
-              background: colorBgContainer,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "end",
-            }}
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(value) => setCollapsed(value)}
           >
-            <p>{time}</p>
-            <p
+            <div
               style={{
-                margin: "0 24px",
-                height: "40px",
-                width: "1px",
-                backgroundColor: "#CACACA",
+                padding: "16px 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-            ></p>
-            <Button
-              style={{ marginRight: "24px" }}
-              icon={<MessageOutlined />}
-            />
-            <Button icon={<BellOutlined />} />
-            <p
-              style={{
-                margin: "0 24px",
-                height: "40px",
-                width: "1px",
-                backgroundColor: "#CACACA",
-              }}
-            ></p>
-            <Dropdown
-              menu={{
-                items,
-              }}
-              trigger={["click"]}
             >
-              <div
+              <LogoHeaderIcon />
+            </div>
+            <Menu
+              theme="light"
+              defaultSelectedKeys={["1"]}
+              mode="inline"
+              items={items2}
+            />
+          </Sider>
+          <Layout>
+            <Header
+              style={{
+                padding: 0,
+                background: colorBgContainer,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "end",
+              }}
+            >
+              <p>{time}</p>
+              <p
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
+                  margin: "0 24px",
+                  height: "40px",
+                  width: "1px",
+                  backgroundColor: "#CACACA",
                 }}
+              ></p>
+              <Button
+                style={{ marginRight: "24px" }}
+                icon={<MessageOutlined />}
+              />
+              <Button icon={<BellOutlined />} />
+              <p
+                style={{
+                  margin: "0 24px",
+                  height: "40px",
+                  width: "1px",
+                  backgroundColor: "#CACACA",
+                }}
+              ></p>
+              <Dropdown
+                menu={{
+                  items,
+                }}
+                trigger={["click"]}
               >
-                <p>
-                  Hello,{" "}
-                  <span style={{ fontWeight: "bold" }}>
-                    {user?.PartnerName}
-                  </span>
-                </p>
-                <Avatar
-                  style={{ margin: " 0 24px 0 16px " }}
-                  size="large"
-                  icon={<UserOutlined />}
-                />
-              </div>
-            </Dropdown>
-          </Header>
-          <Content
-            style={{
-              margin: "16px 16px",
-            }}
-          >
-            {children}
-          </Content>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <p>
+                    Hello,{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {user?.PartnerName}
+                    </span>
+                  </p>
+                  <Avatar
+                    style={{ margin: " 0 24px 0 16px " }}
+                    size="large"
+                    icon={<UserOutlined />}
+                  />
+                </div>
+              </Dropdown>
+            </Header>
+            <Content
+              style={{
+                margin: "16px 16px",
+              }}
+            >
+              {children}
+            </Content>
+          </Layout>
         </Layout>
-      </Layout>
-    </PrivateRoute>
+      </PrivateRoute>
+    </HookupProvider>
   );
 };
 export default AdminLayout;

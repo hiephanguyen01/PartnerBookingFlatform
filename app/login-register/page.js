@@ -93,7 +93,7 @@ const LoginRegister = () => {
                   },
                 ]}
               >
-                <Input prefix={<UserIcon />} size="large" />
+                <Input className="login" prefix={<UserIcon />} size="large" />
               </Form.Item>
 
               <Form.Item
@@ -106,7 +106,11 @@ const LoginRegister = () => {
                   },
                 ]}
               >
-                <Input.Password prefix={<LockIcon />} size="large" />
+                <Input.Password
+                  className="login"
+                  prefix={<LockIcon />}
+                  size="large"
+                />
               </Form.Item>
               <div
                 style={{
