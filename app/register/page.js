@@ -1,27 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
-import styles from "./register.module.scss";
+import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
+import { getCurrentUser2, register } from "@/store/action/userAction";
+import { uploadImage } from "@/utils/uploadImage";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Checkbox,
   Col,
   Form,
-  Image,
   Input,
   Radio,
   Row,
   Upload,
   message,
 } from "antd";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
-import { uploadImage } from "@/utils/uploadImage";
-import { authService } from "@/services/AuthService";
-import { useDispatch } from "react-redux";
-import { register } from "@/store/action/userAction";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./register.module.scss";
 
 const Register = () => {
+  const user = useSelector((state) => state.userReducer.user);
   const [form, setForm] = useState(1);
   const [loading, setLoading] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -33,6 +33,7 @@ const Register = () => {
   const [imageUrl2, setImageUrl2] = useState();
   const [imageUrl3, setImageUrl3] = useState();
   const [imageUrl4, setImageUrl4] = useState();
+  const router = useRouter();
   const dispatch = useDispatch();
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -140,14 +141,22 @@ const Register = () => {
       };
     }
     try {
-      dispatch(register(newData));
+      dispatch(register(newData, router));
       message.success("Vui lòng kiểm tra mail");
     } catch (error) {
-      console.log("🚀 ~ file: page.js:142 ~ onFinish ~ error:", error);
       message.error("Vui lòng thử lại sau");
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    dispatch(getCurrentUser2());
+  }, []);
+  useEffect(() => {
+    if (user) {
+      router.push("/verified");
+    }
+  }, [user]);
 
   return (
     <div className={styles.register}>

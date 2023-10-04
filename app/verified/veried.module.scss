@@ -1,4 +1,4 @@
-.register {
+.verified {
   background-color: #f4f4f4;
   width: 100%;
   min-height: 100vh;
@@ -38,5 +38,15 @@
     span {
       color: var(--secondary-700, #009874);
     }
+  }
+  .greytext {
+    color: var(--neutral-500, #616161);
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .bluetext {
+    color: var(--secondary-700, #009874);
+    font-size: 14px;
+    line-height: 20px;
   }
 }

@@ -34,6 +34,7 @@ export const register = (registerData) => async (dispatch) => {
     const { data } = await authService.register(registerData);
     dispatch({ type: SET_USER, payload: data.user });
     localStorage.setItem("token", data.token);
+    router.push("/verify");
   } catch (error) {
     message.error("Vui lòng thử lại sau!");
     console.log(error);
@@ -48,6 +49,14 @@ export const getCurrentUser = (router) => async (dispatch) => {
   } catch (error) {
     router.push("/login-register");
   }
+  dispatch({ type: SET_AUTH, payload: false });
+};
+export const getCurrentUser2 = (router) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_AUTH, payload: true });
+    const { data } = await authService.me();
+    dispatch({ type: SET_USER, payload: data.user });
+  } catch (error) {}
   dispatch({ type: SET_AUTH, payload: false });
 };
 export const logOut = (router) => (dispatch) => {
