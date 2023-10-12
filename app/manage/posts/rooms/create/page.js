@@ -291,17 +291,15 @@ export default function CreateRoom() {
                     <Divider />
                     <span className={classes.titleSmall}>Tiện ích đi kèm</span>
                   </Col>
-                  {listCheckBox.map((item, idx) => {
-                    return (
-                      <Col span={8}>
-                        <Form.Item name="name" key={idx}>
-                          <Checkbox className={classes.checkBox}>
-                            {item.label}
-                          </Checkbox>
-                        </Form.Item>
-                      </Col>
-                    );
-                  })}
+                  {listCheckBox.map((item, idx) => (
+                    <Col key={idx} span={8}>
+                      <Form.Item key={idx} name="name">
+                        <Checkbox className={classes.checkBox}>
+                          {item.label}
+                        </Checkbox>
+                      </Form.Item>
+                    </Col>
+                  ))}
                 </Row>
               </div>
               <div className={classes.container}>
@@ -313,8 +311,9 @@ export default function CreateRoom() {
                     <span className={classes.titleSub}>Hình ảnh</span>
                     <div className={classes.listImage}>
                       {listInfoImage.map((item, idx) => (
-                        <div className={classes.itemImage}>
+                        <div key={idx} className={classes.itemImage}>
                           <Upload
+                            key={idx}
                             listType="picture-card"
                             className={"avatar-uploader1"}
                             showUploadList={false}
