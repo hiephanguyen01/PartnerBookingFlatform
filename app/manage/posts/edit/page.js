@@ -20,6 +20,7 @@ import { studioPostService } from "@/services/studioPostService";
 import { wardService } from "@/services/WardService";
 import { provinceService } from "@/services/ProvinceService";
 import { districtService } from "@/services/DistrictService";
+import { IMG } from "@/utils/REACT_APP_DB_BASE_URL_IMG";
 
 const listInfoImage = [
   {
@@ -391,9 +392,7 @@ export default function EditPost() {
                               height={"100%"}
                               style={{ objectFit: "cover" }}
                               preview={false}
-                              src={`${process.env.BASE_URL_IMAGE}/${
-                                dataDetail[item.Name]
-                              }`}
+                              src={IMG(dataDetail[item.Name])}
                               //   fallback={fallBackImg}
                             />
                           ) : (

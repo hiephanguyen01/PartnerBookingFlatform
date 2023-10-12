@@ -77,14 +77,14 @@ export default function CreatePost() {
                 Next
               </Button>
             )} */}
-            {current === steps.length - 1 && (
+            {/* {current === steps.length - 1 && (
               <Button
                 type="primary"
                 onClick={() => message.success("Processing complete!")}
               >
                 Done
               </Button>
-            )}
+            )} */}
           </div>
         </div>
       </div>

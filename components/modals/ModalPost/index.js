@@ -8,6 +8,7 @@ import DeviceIcon from "@/assets/svg/device";
 import ModelIcon from "@/assets/svg/model";
 import { Modal } from "antd";
 import MakeupIcon from "@/assets/svg/makeup";
+import { useRouter } from "next/navigation";
 
 const itemModal = [
   {
@@ -52,6 +53,7 @@ export default function ModalPost({
   handleCancel,
   listCategory,
 }) {
+  const router = useRouter();
   console.log(listCategory);
   // const [isModalOpen, setIsModalOpen] = useState(false);
   //   const showModal = () => {
@@ -87,6 +89,7 @@ export default function ModalPost({
                   listCategory.includes(item.category) ? classes.disable : ""
                 }`}
                 key={idx}
+                onClick={() => router.push("/manage/posts/create")}
               >
                 {item.icons}
                 <div className={classes.content}>

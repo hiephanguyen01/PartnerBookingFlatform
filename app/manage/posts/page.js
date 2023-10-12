@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { studioPostService } from "@/services/studioPostService";
 import { useEffect, useState } from "react";
 import ModalPost from "@/components/modals/ModalPost";
+import { IMG } from "@/utils/REACT_APP_DB_BASE_URL_IMG";
 
 export default function Post() {
   const [dataTable, setDataTable] = useState([]);
@@ -28,7 +29,7 @@ export default function Post() {
               height={88}
               style={{ objectFit: "cover" }}
               alt="demo"
-              src={`${process.env.BASE_URL_IMAGE}/${_.Image1}`}
+              src={IMG(_.Image1)}
             />
             <div
               style={{ display: "flex", flexDirection: "column", gap: "16px" }}

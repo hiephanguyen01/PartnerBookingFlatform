@@ -26,38 +26,37 @@ const items2 = [
   {
     label: "Dashboard",
     icon: <DotChartOutlined />,
-    key: "/dashboard",
+    key: "/manage/dashboard",
   },
   {
     label: "Bài đăng",
     icon: <ProjectOutlined />,
-    key: "/post",
-    
+    key: "/manage/posts",
   },
   {
     label: "Đơn đặt",
     icon: <SnippetsOutlined />,
-    key: "/booking",
+    key: "/manage/booking",
   },
   {
     label: "Đánh giá",
     icon: <LikeOutlined />,
-    key: "/rating",
+    key: "/manage/rating",
   },
   {
     label: "Dạo",
     icon: <FileImageOutlined />,
-    key: "/dao",
+    key: "/manage/dao",
   },
   {
     label: "Tài chính",
     icon: <PoundCircleOutlined />,
-    key: "/finance",
+    key: "/manage/finance",
   },
   {
     label: "Khuyến mãi",
     icon: <BarcodeOutlined />,
-    key: "/bonus",
+    key: "/manage/bonus",
   },
 ];
 
@@ -65,7 +64,7 @@ const AdminLayout = ({ children }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
   const router = useRouter();
-
+  const [currentRoute, setCurrentRoute] = useState(router.pathname);
   const [collapsed, setCollapsed] = useState(false);
   const [time, setTime] = useState();
 
@@ -79,6 +78,11 @@ const AdminLayout = ({ children }) => {
       icon: <LoginOutlined />,
     },
   ];
+
+  const onClick = (e) => {
+    setCurrentRoute(e.key);
+    router.push(e.key);
+  };
 
   useEffect(() => {
     const timee = setTimeout(() => {
@@ -116,9 +120,10 @@ const AdminLayout = ({ children }) => {
             </div>
             <Menu
               theme="light"
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={currentRoute}
               mode="inline"
               items={items2}
+              onClick={onClick}
             />
           </Sider>
           <Layout>
