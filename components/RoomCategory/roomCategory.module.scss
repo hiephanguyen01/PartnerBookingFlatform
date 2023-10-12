@@ -1,0 +1,97 @@
+.containerTable {
+    background-color: #fff;
+    padding: 24px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+}
+.container {
+    background-color: #fff;
+    padding: 24px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+    max-width: 1152px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 40px 24px;
+        h3 {
+            color: var(--neutral-700, #161616);
+            text-align: center;
+            /* Website/Heading/Heading 3 */
+            font-family: Nunito;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 140%; /* 33.6px */
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            &:first-child {
+                margin-top: 8px;
+            }
+            color: var(--neutral-500, #616161);
+            text-align: center;
+            /* Website/Body/Medium/Regular */
+            font-family: Nunito;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px; /* 150% */
+        }
+    }
+}
+
+.notification {
+    background-color: #fff;
+    padding: 24px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+    max-width: 566px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 40px;
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        h4 {
+            margin-top: 40px;
+            color: var(--neutral-700, #161616);
+            text-align: center;
+            /* Website/Body/Large/Bold */
+            font-family: Nunito;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 26px; /* 144.444% */
+        }
+        p {
+            color: var(--neutral-500, #616161);
+            text-align: center;
+            /* Website/Body/Large/Regular */
+            font-family: Nunito;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px; /* 144.444% */
+            margin-top: 16px;
+            margin-bottom: 40px;
+        }
+    }
+}
+
+.iconAction {
+    border-radius: 24px;
+    background: var(--neutral-0, #fff);
+    box-shadow: 0px 2px 15px 0px rgba(20, 16, 16, 0.08);
+
+    font-size: 25px;
+    padding: 10px;
+}
