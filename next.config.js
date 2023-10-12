@@ -6,7 +6,7 @@ module.exports = (phase, { defaultConfig }) => {
   return {
     env: {
       BASE_URL: isProduction ? "https://am.bookingstudio.vn" : process.env.BASE_URL,
-      BASE_URL_IMAGE: "https://am.bookingstudio.vn/api/image""
+      BASE_URL_IMAGE: "https://am.bookingstudio.vn/api/image"
     },
     async redirects() {
       return [
