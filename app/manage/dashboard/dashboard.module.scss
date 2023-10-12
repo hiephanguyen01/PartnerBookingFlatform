@@ -1,0 +1,50 @@
+.dashboard {
+  .barChart {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    border-radius: 16px;
+    background: var(--neutral-0, #fff);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+    .heading {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .title {
+        color: var(--neutral-700, #161616);
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+  }
+  .pieChart {
+    display: flex;
+    width: 100%;
+    height: 400px;
+    padding: 24px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    border-radius: 16px;
+    background: var(--neutral-0, #fff);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+    .heading {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .title {
+        color: var(--neutral-700, #161616);
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+  }
+}

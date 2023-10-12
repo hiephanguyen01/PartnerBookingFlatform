@@ -1,11 +1,9 @@
 "use client";
-import MainLayout from "@/components/layout/MainLayout";
+import store from "@/store/store";
 import { ConfigProvider } from "antd";
 import { Nunito } from "next/font/google";
-import "./globals.scss";
-import HookupProvider from "@/components/HookupProvider";
-import store from "@/store/store";
 import { Provider } from "react-redux";
+import "./globals.scss";
 
 const nunito = Nunito({
   weight: ["400", "700"],
@@ -25,26 +23,24 @@ export default function RootLayout({ children }) {
     <Provider store={store}>
       <html lang="en">
         <body className={nunito.className}>
-          <HookupProvider>
-            <ConfigProvider
-              theme={{
-                token: {
-                  // Seed Token
+          <ConfigProvider
+            theme={{
+              token: {
+                // Seed Token
+                colorPrimary: "#e22828",
+              },
+              components: {
+                Tabs: {
                   colorPrimary: "#e22828",
                 },
-                components: {
-                  Tabs: {
-                    colorPrimary: "#e22828",
-                  },
-                  Input: {
-                    borderRadius: "6px",
-                  },
+                Input: {
+                  borderRadius: "6px",
                 },
-              }}
-            >
-              <>{children} </>
-            </ConfigProvider>
-          </HookupProvider>
+              },
+            }}
+          >
+            <>{children} </>
+          </ConfigProvider>
         </body>
       </html>
     </Provider>

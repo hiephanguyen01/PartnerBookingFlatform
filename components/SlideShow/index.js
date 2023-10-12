@@ -99,7 +99,59 @@ const SlideShow = ({ data, type }) => {
           ))}
         </Swiper>
       );
-
+    case "Banner":
+      return (
+        <Swiper
+          slidesPerView={4}
+          spaceBetween={28}
+          hashNavigation={{
+            watchState: true,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          // navigation={true}
+          modules={[Pagination, Navigation, HashNavigation]}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            1024: {
+              slidesPerView: 2,
+              spaceBetween: 15,
+            },
+            1300: {
+              slidesPerView: 2.5,
+              spaceBetween: 28,
+            },
+          }}
+          className="bannerSwipper"
+        >
+          {[1, 2, 3, 4, 5, 6, 7, 8]?.map((item) => (
+            <SwiperSlide key={item.id} data-hash={item.id}>
+              <img
+                style={{
+                  width: 454,
+                  height: 240,
+                  position: "relative",
+                  boxShadow: "0px 4px 8px rgba(41.44, 41.44, 41.44, 0.12)",
+                  borderRadius: 12,
+                }}
+                src="https://via.placeholder.com/454x240"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      );
     default:
       break;
   }

@@ -156,6 +156,11 @@ a {
     margin-left: 6px;
   }
 }
+.login {
+  .ant-input {
+    padding-left: 10px !important;
+  }
+}
 
 .btnPrimary {
   background-color: #e22828;
@@ -218,6 +223,14 @@ a {
 /* .trendTab .ant-tabs-nav::before {
   border-bottom: 1px solid #e22828 !important;
 } */
+.bannerSwipper {
+  margin-top: 24px;
+  height: 290px;
+}
+
+.bannerSwipper .swiper-pagination-bullet-active {
+  background-color: #e22828;
+}
 .trendSwipper {
   margin-top: 24px;
   height: 300px;
@@ -251,6 +264,15 @@ a {
   & input {
     font-size: 16px !important;
     height: 50px;
+  }
+}
+.big {
+  .image-post-uploader {
+    .ant-upload {
+      width: 100% !important;
+      height: 136px !important;
+      overflow: hidden;
+    }
   }
 }
 /* Contact section:end */

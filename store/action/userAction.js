@@ -22,9 +22,19 @@ export const Login = (dataLogin) => async (dispatch) => {
     const { data } = await authService.login(dataLogin);
     dispatch({ type: SET_USER, payload: data.user });
     localStorage.setItem("token", data.token);
-    console.log("first");
   } catch (error) {
     message.error("Tên đăng nhập hoặc mật khẩu không đúng!");
+    console.log(error);
+  }
+  dispatch({ type: SET_LOADING, payload: false });
+};
+export const register = (registerData, router) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_LOADING, payload: true });
+    const { data } = await authService.register(registerData);
+    router.push(`/verified?email=${data.user.Email}`);
+  } catch (error) {
+    message.error("Vui lòng thử lại sau!");
     console.log(error);
   }
   dispatch({ type: SET_LOADING, payload: false });
@@ -37,6 +47,14 @@ export const getCurrentUser = (router) => async (dispatch) => {
   } catch (error) {
     router.push("/login-register");
   }
+  dispatch({ type: SET_AUTH, payload: false });
+};
+export const getCurrentUser2 = (router) => async (dispatch) => {
+  try {
+    dispatch({ type: SET_AUTH, payload: true });
+    const { data } = await authService.me();
+    dispatch({ type: SET_USER, payload: data.user });
+  } catch (error) {}
   dispatch({ type: SET_AUTH, payload: false });
 };
 export const logOut = (router) => (dispatch) => {
