@@ -35,8 +35,9 @@ const StyledReactInputVerificationCode = styled.div`
     margin-top: 20px;
   }
 `;
-const Verified = () => {
+const Verified = ({ searchParams }) => {
   const router = useRouter();
+  const Email = searchParams.email;
   const [value, setValue] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const [countDown, setCountDown] = useState(60);
@@ -46,14 +47,13 @@ const Verified = () => {
   const [length, setLength] = useState(false);
   const [password, setPassword] = useState(null);
   const [step, setStep] = useState(1);
-  const user = useSelector((state) => state.userReducer.user);
   useEffect(() => {
     dispatch(getCurrentUser2());
   }, []);
 
   const onCompleted = async (code) => {
     try {
-      await authService.checkCode(code);
+      await authService.checkCode(Email, code);
       setStep(2);
     } catch (error) {
       setIsInvalid(true);
@@ -63,7 +63,11 @@ const Verified = () => {
   };
 
   const genCode = async () => {
-    await authService.genCode();
+    try {
+      await authService.genCode(Email);
+    } catch (error) {
+      message.error("Email không tồn tại, vui lòng thử lại sau!");
+    }
   };
   const onChangePassword = (e) => {
     const raw = e.target.value;
@@ -81,6 +85,7 @@ const Verified = () => {
   const onFinish = async () => {
     try {
       await authService.updateP({
+        Email,
         password,
       });
       localStorage.removeItem("token");
@@ -103,10 +108,10 @@ const Verified = () => {
   }, [countDown]);
 
   useEffect(() => {
-    if (!user) {
+    if (!Email) {
       router.push("/login-register");
     }
-  }, [user]);
+  }, [searchParams]);
   return (
     <div className={styles.verified}>
       <div className={styles.container}>
@@ -170,7 +175,7 @@ const Verified = () => {
                           wordWrap: "break-word",
                         }}
                       >
-                        {user?.Email}
+                        {Email}
                       </span>
                       <span
                         style={{
@@ -353,7 +358,7 @@ const Verified = () => {
                             }}
                           >
                             {" "}
-                            {user?.Email}
+                            {Email}
                           </span>
                         </div>
                       </div>

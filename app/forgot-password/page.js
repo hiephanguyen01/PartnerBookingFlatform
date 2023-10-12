@@ -1,21 +1,26 @@
 "use client";
-import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
 import { Login } from "@/store/action/userAction";
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, Row, message } from "antd";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LeftSide from "./components/LeftSide";
 import LockIcon from "./components/LockIcon";
 import UserIcon from "./components/UserIcon";
-import styles from "./login.module.scss";
+import styles from "./forgot.module.scss";
+import { useEffect } from "react";
+import LogoHeaderIcon from "@/assets/svg/LogoHeaderIcon";
+import { authService } from "@/services/AuthService";
 
 const LoginRegister = () => {
   const user = useSelector((state) => state.userReducer.user);
   const router = useRouter();
-  const dispatch = useDispatch();
-  const onFinish = (values) => {
-    dispatch(Login(values));
+  const onFinish = async (values) => {
+    try {
+      await authService.genCode(values.email);
+      router.push(`/verified?email=${values.email}`);
+    } catch (error) {
+      message.error("Địa chỉ email không tồn tại");
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -23,12 +28,11 @@ const LoginRegister = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("🚀 ~ file: page.js:25 ~ useEffect ~ user:", user);
       router.push("/manage");
     }
   }, [user]);
   return (
-    <div className={styles.login}>
+    <div className={styles.forgot}>
       <div className={styles.container}>
         <div style={{ marginBottom: "50px" }}>
           <LogoHeaderIcon />
@@ -78,79 +82,26 @@ const LoginRegister = () => {
                     marginBottom: "40px",
                   }}
                 >
-                  Đăng nhập để quản lý
+                  Quên mật khẩu
                 </h3>
                 <Form.Item
-                  label="Tên đăng nhập"
+                  label="Địa chỉ email"
                   name="email"
                   rules={[
                     {
                       required: true,
-                      message: "Vui lòng nhập tên đăng nhập!",
+                      message: "Vui lòng nhập địa chỉ email!",
                     },
                   ]}
                 >
                   <Input className="login" prefix={<UserIcon />} size="large" />
                 </Form.Item>
 
-                <Form.Item
-                  label="Mật khẩu"
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Vui lòng nhập mật khẩu!",
-                    },
-                  ]}
-                >
-                  <Input.Password
-                    className="login"
-                    prefix={<LockIcon />}
-                    size="large"
-                  />
-                </Form.Item>
-                <div
-                  style={{
-                    color: "var(--primary-700, #E22828)",
-                    textAlign: "right",
-                    fontSize: "16px",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    lineHeight: "24px",
-                    marginBottom: "24px",
-                  }}
-                >
-                  <a onClick={() => router.push("forgot-password")}>
-                    Quên mật khẩu?
-                  </a>
-                </div>
-
                 <Form.Item>
                   <Button type="primary" htmlType="submit" block size="large">
-                    Đăng nhập
+                    Xác nhận
                   </Button>
                 </Form.Item>
-
-                <div
-                  style={{
-                    color: "var(--neutral-600, #3F3F3F)",
-                    textAlign: "center",
-                    fontSize: "16px",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    lineHeight: "24px",
-                  }}
-                >
-                  <p>
-                    Bạn chưa có tài khoản?{" "}
-                    <a
-                      style={{ color: "var(--primary-700, #E22828)" }}
-                      onClick={() => router.push("/register")}
-                    >
-                      Đăng ký
-                    </a>
-                  </p>
-                </div>
               </Form>
             </div>
           </Col>

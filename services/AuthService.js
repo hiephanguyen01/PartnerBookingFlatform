@@ -7,11 +7,14 @@ class AuthService extends BaseService {
   register = (data) => {
     return this.post("/api/register-partner/register", data);
   };
-  checkCode = (code) => {
-    return this.post("/api/register-partner/code", { VerifyCode: code });
+  checkCode = (email, code) => {
+    return this.post("/api/register-partner/code", {
+      Email: email,
+      VerifyCode: code,
+    });
   };
-  genCode = () => {
-    return this.get("/api/register-partner/code");
+  genCode = (email) => {
+    return this.get(`/api/register-partner/code?email=${email}`);
   };
   updateP = (data) => {
     return this.patch("/api/register-partner/pass", data);

@@ -181,7 +181,7 @@ const AdminLayout = ({ children }) => {
             </Header>
             <Content
               style={{
-                margin: "16px 16px",
+                margin: "24px",
               }}
             >
               {children}

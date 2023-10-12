@@ -28,13 +28,11 @@ export const Login = (dataLogin) => async (dispatch) => {
   }
   dispatch({ type: SET_LOADING, payload: false });
 };
-export const register = (registerData) => async (dispatch) => {
+export const register = (registerData, router) => async (dispatch) => {
   try {
     dispatch({ type: SET_LOADING, payload: true });
     const { data } = await authService.register(registerData);
-    dispatch({ type: SET_USER, payload: data.user });
-    localStorage.setItem("token", data.token);
-    router.push("/verify");
+    router.push(`/verified?email=${data.user.Email}`);
   } catch (error) {
     message.error("Vui lòng thử lại sau!");
     console.log(error);

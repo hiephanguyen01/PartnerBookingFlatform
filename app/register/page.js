@@ -12,6 +12,7 @@ import {
   Input,
   Radio,
   Row,
+  Select,
   Upload,
   message,
 } from "antd";
@@ -19,10 +20,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./register.module.scss";
+import { bankService } from "@/services/BankService";
 
 const Register = () => {
-  const user = useSelector((state) => state.userReducer.user);
   const [form, setForm] = useState(1);
+  const [bankList, setBankList] = useState("");
   const [loading, setLoading] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [imageRes1, setImageRes1] = useState(null);
@@ -56,7 +58,6 @@ const Register = () => {
       onSuccess("ok");
     }, 2000);
   };
-
   const handleChange = async (info, id) => {
     if (info.file.status === "uploading") {
       setLoading(true);
@@ -122,20 +123,32 @@ const Register = () => {
       if (!(imageRes3 && imageRes4)) {
         return message.error("Please choose an image!");
       }
+      console.log(
+        bankList.find((val) => val.value === values.BankBranchName).label
+      );
       newData = {
         ...values,
+        BusinessType: "Tổ chức",
+        BankBranchName: bankList.find(
+          (val) => val.value === values.BankBranchName
+        ).label,
+        BankId: values.BankBranchName,
         ImageGPKD1: imageRes1,
         ImageGPKD2: imageRes2,
         ImageCCCD1: imageRes3,
         ImageCCCD2: imageRes4,
       };
-      console.log(newData);
     } else {
-      if (!(imageRes3 && imageRes4)) {
-        return message.error("Please choose an image!");
-      }
+      // if (!(imageRes3 && imageRes4)) {
+      //   return message.error("Please choose an image!");
+      // }
       newData = {
         ...values,
+        BusinessType: "Cá nhân",
+        BankBranchName: bankList.find(
+          (val) => val.value === values.BankBranchName
+        ).label,
+        BankId: values.BankBranchName,
         ImageCCCD1: imageRes3,
         ImageCCCD2: imageRes4,
       };
@@ -150,13 +163,13 @@ const Register = () => {
   };
 
   useEffect(() => {
-    dispatch(getCurrentUser2());
+    (async () => {
+      const { data } = await bankService.getAllBank();
+      setBankList(
+        data.data.map((val) => ({ value: val.id, label: val.VNName }))
+      );
+    })();
   }, []);
-  useEffect(() => {
-    if (user) {
-      router.push("/verified");
-    }
-  }, [user]);
 
   return (
     <div className={styles.register}>
@@ -195,6 +208,7 @@ const Register = () => {
                     name="Email"
                     rules={[
                       {
+                        type: "email",
                         required: true,
                         message: "Vui lòng nhập email!",
                       },
@@ -272,7 +286,21 @@ const Register = () => {
                       },
                     ]}
                   >
-                    <Input size="large" />
+                    <Select
+                      size="large"
+                      showSearch
+                      placeholder="Chọn ngân hàng"
+                      optionFilterProp="children"
+                      filterOption={(input, option) =>
+                        (option?.label ?? "").includes(input)
+                      }
+                      filterSort={(optionA, optionB) =>
+                        (optionA?.label ?? "")
+                          .toLowerCase()
+                          .localeCompare((optionB?.label ?? "").toLowerCase())
+                      }
+                      options={bankList}
+                    />
                   </Form.Item>
                   <p className={styles.sub}>
                     Bằng việc nhấn vào nút đăng ký, anh/chị đồng ý rằng Booking
@@ -477,6 +505,7 @@ const Register = () => {
                     name="Email"
                     rules={[
                       {
+                        type: "email",
                         required: true,
                         message: "Vui lòng nhập email!",
                       },
@@ -530,7 +559,21 @@ const Register = () => {
                       },
                     ]}
                   >
-                    <Input size="large" />
+                    <Select
+                      size="large"
+                      showSearch
+                      placeholder="Chọn ngân hàng"
+                      optionFilterProp="children"
+                      filterOption={(input, option) =>
+                        (option?.label ?? "").includes(input)
+                      }
+                      filterSort={(optionA, optionB) =>
+                        (optionA?.label ?? "")
+                          .toLowerCase()
+                          .localeCompare((optionB?.label ?? "").toLowerCase())
+                      }
+                      options={bankList}
+                    />
                   </Form.Item>
                   <p className={styles.sub}>
                     Bằng việc nhấn vào nút đăng ký, anh/chị đồng ý rằng Booking
