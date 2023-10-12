@@ -5,7 +5,7 @@ module.exports = (phase, { defaultConfig }) => {
   const homePath = process.env.NEXT_PUBLIC_HOME_PATH || "/home";
   return {
     env: {
-      BASE_URL: isProduction ? "https://am.bookingstudio.vn" : process.env.BASE_URL,
+      BASE_URL: true ? "https://am.bookingstudio.vn" : process.env.BASE_URL,
       BASE_URL_IMAGE: "https://am.bookingstudio.vn/api/image"
     },
     async redirects() {
