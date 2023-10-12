@@ -344,7 +344,7 @@ export default function InfoGeneral({ next }) {
           <p>Kích thước khuyến nghị: 1200 x 830 px</p>
           <div className={classes.listImage}>
             {listInfoImage.map((item, idx) => (
-              <div className={classes.itemImage}>
+              <div key={idx} className={classes.itemImage}>
                 <Upload
                   listType="picture-card"
                   className={"avatar-uploader1"}
