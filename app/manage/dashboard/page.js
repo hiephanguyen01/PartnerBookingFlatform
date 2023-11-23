@@ -13,14 +13,41 @@ import SuccessIcon from "./components/SuccessIcon";
 import WaitingIcon from "./components/WaitingIcon";
 import styles from "./dashboard.module.scss";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { statisticService } from "@/services/Statistic";
 
 dayjs.extend(customParseFormat);
 
 const { RangePicker } = DatePicker;
 
 const Dashboard = () => {
+  const [barChart, setBarChart] = useState();
+  const [dateBarChart, setDateBarChart] = useState();
   const user = useSelector((state) => state.userReducer.user);
   const customWeekStartEndFormat = (value) => `${dayjs(value).format("DD/MM")}`;
+
+  const onChange = (date, dateString) => {
+    let dateA;
+    if (date) {
+      dateA = {
+        startDate: dayjs(date[0]).toISOString(),
+        endDate: dayjs(date[1]).toISOString(),
+      };
+    } else {
+      dateA = "";
+    }
+
+    setDateBarChart(JSON.stringify(dateA));
+  };
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await statisticService.getBarChart(dateBarChart);
+      setBarChart(data.data);
+      console.log(data.data?.reduce((acc, val) => acc + val.total, 0));
+    })();
+  }, [dateBarChart]);
+
   return (
     <div className={styles.dashboard}>
       <div
@@ -103,15 +130,19 @@ const Dashboard = () => {
           <Col lg={10}>
             <div className={styles.barChart}>
               <div className={styles.heading}>
-                <div className={styles.title}>Tổng doanh thu: 5.999K</div>
+                <div className={styles.title}>
+                  Tổng doanh thu:{" "}
+                  {barChart?.reduce((acc, val) => acc + val.total, 0) + "M"}
+                </div>
                 <div className={styles.title}>
                   <RangePicker
                     style={{ width: "150px" }}
                     format={customWeekStartEndFormat}
+                    onChange={onChange}
                   />
                 </div>
               </div>
-              <BarChartCus />
+              <BarChartCus data={barChart} />
             </div>
           </Col>
         </Row>

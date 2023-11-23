@@ -1,0 +1,36 @@
+.comment {
+  .headgrp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .image {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .name {
+    color: var(--neutral-400, #828282);
+    font-family: Nunito;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .content {
+    margin: 10px 0;
+    color: var(--neutral-600, #3f3f3f);
+    font-family: Nunito;
+    font-size: 16px;
+    font-weight: 400;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
