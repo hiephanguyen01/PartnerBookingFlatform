@@ -42,3 +42,26 @@ export const CATEGORIES = [
     linkTo: "model",
   },
 ];
+
+export function getCategoryByName(category) {
+  switch (category) {
+    case "studio": {
+      return 1;
+      break;
+    }
+    case "photographer": {
+      return 2;
+      break;
+    }
+    case "makeup": {
+      return 4;
+      break;
+    }
+    case "model": {
+      return 6;
+      break;
+    }
+    default:
+      break;
+  }
+}
