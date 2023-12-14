@@ -99,7 +99,7 @@ export default function InfoGeneral({ next }) {
       await extractAllWards(Code);
     }
     setAddress((prev) => {
-      let arr = prev;
+      let arr = [...prev];
       arr[idx] = e;
       return arr;
     });

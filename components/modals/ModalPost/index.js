@@ -89,7 +89,13 @@ export default function ModalPost({
                   listCategory.includes(item.category) ? classes.disable : ""
                 }`}
                 key={idx}
-                onClick={() => router.push("/manage/posts/create")}
+                onClick={() => {
+                  if (!listCategory.includes(item.category)) {
+                    router.push(
+                      `/manage/posts/create?category=${item.category}`
+                    );
+                  }
+                }}
               >
                 {item.icons}
                 <div className={classes.content}>

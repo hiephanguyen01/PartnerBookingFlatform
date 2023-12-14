@@ -1,0 +1,11 @@
+.container {
+    background-color: #fff;
+    padding: 24px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+    color: var(--neutral-600, #3f3f3f);
+    .top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}

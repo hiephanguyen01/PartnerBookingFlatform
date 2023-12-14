@@ -15,9 +15,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFormDataStudioPost } from "@/store/action/studioPostAction";
 import { studioPostService } from "@/services/studioPostService";
+import { RESET_FORM_DATA } from "@/store/types/studioPostType";
+import { useSearchParams } from "next/navigation";
 const { Option } = Select;
 export default function WorkTime({ next }) {
   const [messageApi, contextHolder] = message.useMessage();
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
   const [obj, setObj] = useState({
     morning: {
       hourMorningStart: "07",
@@ -216,9 +220,10 @@ export default function WorkTime({ next }) {
     // In ra console
     console.log(formDataObject);
     try {
-      const { data } = await studioPostService.createStudioPost(formData);
+      const { data } = await studioPostService.createStudioPost(category,formData);
       console.log("create", data);
       if (data.success) {
+        dispatch({ type: RESET_FORM_DATA });
         setLoadingBtn(false);
         next();
       }
