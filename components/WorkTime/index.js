@@ -18,7 +18,7 @@ import { studioPostService } from "@/services/studioPostService";
 import { RESET_FORM_DATA } from "@/store/types/studioPostType";
 import { useSearchParams } from "next/navigation";
 const { Option } = Select;
-export default function WorkTime({ next }) {
+export default function WorkTime({ next,setPostNew }) {
   const [messageApi, contextHolder] = message.useMessage();
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
@@ -223,6 +223,7 @@ export default function WorkTime({ next }) {
       const { data } = await studioPostService.createStudioPost(category,formData);
       console.log("create", data);
       if (data.success) {
+        setPostNew(data.studio)
         dispatch({ type: RESET_FORM_DATA });
         setLoadingBtn(false);
         next();
