@@ -11,55 +11,70 @@ import {
   Row,
   Select,
   Upload,
+  message,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import classes from "./createRoom.module.scss";
 import TextArea from "antd/es/input/TextArea";
 import ImageDefault from "@/assets/svg/ImageDefault";
+import { studioRoomService } from "@/services/studioRoomServices";
+import { useSearchParams } from "next/navigation";
+import { IMG } from "@/utils/REACT_APP_DB_BASE_URL_IMG";
+import { getCategoryByName } from "@/utils/category";
 const { Option } = Select;
 const listInfoImage = [
   {
     title: "Ảnh bìa",
     id: 0,
+    Name: "Image1",
   },
   {
     title: "Ảnh 1",
     id: 1,
+    Name: "Image2",
   },
   {
     title: "Ảnh 2",
     id: 2,
+    Name: "Image3",
   },
   {
     title: "Ảnh 3",
     id: 3,
+    Name: "Image4",
   },
   {
     title: "Ảnh 4",
     id: 4,
+    Name: "Image5",
   },
   {
     title: "Ảnh 5",
     id: 5,
+    Name: "Image6",
   },
   {
     title: "Ảnh 6",
     id: 6,
+    Name: "Image7",
   },
   {
     title: "Ảnh 7",
     id: 7,
+    Name: "Image8",
   },
   {
     title: "Ảnh 8",
     id: 8,
+    Name: "Image9",
   },
   {
     title: "Ảnh 9",
     id: 9,
+    Name: "Image10",
   },
 ];
-export default function CreateRoom() {
+export default function CreateRoom({ params }) {
   const [files, setFiles] = useState([
     null,
     null,
@@ -75,44 +90,121 @@ export default function CreateRoom() {
   const [form] = Form.useForm();
   const topRef = React.useRef(null);
   const [targetOffset, setTargetOffset] = useState();
+  const [dataDetail, setDataDetail] = useState({});
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
+
+  console.log(params.id, category);
+  async function getDetailRoom() {
+    try {
+      const { data } = await studioRoomService.getDetailRoomById(
+        params.id,
+        getCategoryByName(category)
+      );
+      setDataDetail(data.post);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  
+
+  console.log(dataDetail);
+
+  const initialValues = {
+    Name: dataDetail?.Name,
+    PriceByHour: dataDetail?.PriceByHour,
+    PriceByDate: dataDetail?.PriceByDate,
+    PriceByDate: dataDetail?.PriceByDate,
+    Area: dataDetail?.Area,
+    Length: dataDetail?.Length,
+    Width: dataDetail?.Width,
+    Height: dataDetail?.Height,
+    MaximumCustomer: dataDetail?.MaximumCustomer,
+    Surcharge: dataDetail?.Surcharge,
+    Description: dataDetail?.Description,
+    HasBackground: dataDetail?.HasBackground,
+    BackgroundDescription: dataDetail?.BackgroundDescription,
+    HasLamp: dataDetail?.HasLamp,
+    HasTable: dataDetail?.HasTable,
+    HasChair: dataDetail?.HasChair,
+    HasFlower: dataDetail?.HasFlower,
+    HasOtherDevice: dataDetail?.HasOtherDevice,
+    OtherDeviceDescription: dataDetail?.OtherDeviceDescription,
+    HasFan: dataDetail?.HasFan,
+    HasAirConditioner: dataDetail?.HasAirConditioner,
+    HasDressingRoom: dataDetail?.HasDressingRoom,
+    HasWC: dataDetail?.HasWC,
+    HasCamera: dataDetail?.HasCamera,
+    HasWifi: dataDetail?.HasWifi,
+    HasMotorBikeParking: dataDetail?.HasMotorBikeParking,
+    HasCarParking: dataDetail?.HasCarParking,
+    HasSupporter: dataDetail?.HasSupporter,
+    // WardId: dataDetail?.Address?.split(",")[1],
+    // // ProvinceId: dataDetail?.Address?.split(",")[3],
+    // // DistrictId: dataDetail?.Address?.split(",")[2],
+    // addressDetail: dataDetail?.Address?.split(",")[0],
+  };
+
+  useEffect(() => {
+    getDetailRoom();
+  }, [params.id]);
   useEffect(() => {
     setTargetOffset(topRef.current?.clientHeight);
   }, []);
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [form, initialValues]);
+
   const listCheckBox = [
     {
       label: "Quạt",
+      name: "HasFan",
       //   value: data.HasFan,
     },
     {
       label: "Máy lạnh",
+      name: "HasAirConditioner",
       //   value: data.HasAirConditioner,
     },
     {
       label: "Phòng thay đồ",
+      name: "HasDressingRoom",
       //   value: data.HasDressingRoom,
     },
     {
       label: "Nhà vệ sinh riêng",
+      name: "HasWC",
       //   value: data.HasWC,
     },
     {
       label: "Camera an ninh",
+      name: "HasCamera",
       //   value: data.HasCamera,
     },
     {
       label: "Wifi",
+      name: "HasWifi",
       //   value: data.HasWifi,
     },
     {
       label: "Chỗ đậu xe máy",
+      name: "HasMotorBikeParking",
+
+      //   value: data.HasMotorBikeParking,
       //   value: data.HasMotorBikeParking,
     },
     {
       label: "Chỗ đậu xe ô tô",
+      name: "HasCarParking",
       //   value: data.HasCarParking,
     },
     {
       label: "Nhân viên hỗ trợ",
+      name: "HasSupporter",
       //   value: data.HasSupporter,
     },
   ];
@@ -122,8 +214,65 @@ export default function CreateRoom() {
     newFiles[b] = file;
     setFiles([...newFiles]);
   };
+  const onFinish = async (values) => {
+    console.log(values);
+    let formData = new FormData();
+
+    for (let [idex, file] of files.entries()) {
+      formData.append(
+        `Image${idex + 1}`,
+        file !== null ? file.originFileObj : null
+      );
+      // dispatch(
+      //   updateFormDataStudioPost(
+      //     `Image${idex + 1}`,
+      //     file !== null ? file.originFileObj : null
+      //   )
+      // );
+    }
+    for (let key in values) {
+      formData.append(key, values[key]);
+      // if (key == "addressDetail") {
+      //   // formData.append("Address", values[key]);
+      //   dispatch(
+      //     updateFormDataStudioPost("Address", address.reverse().join(","))
+      //   );
+      // } else {
+      //   // formData.append(key, values[key]);
+      //   dispatch(updateFormDataStudioPost(key, values[key]));
+      // }
+    }
+    try {
+      const { data } = await studioRoomService.updateRoomPartnerById(
+        params.id,
+        category,
+        formData
+      );
+      console.log("create", data);
+      if (data.success) {
+        messageApi.open({
+          type: "success",
+          content: "Tạo thành công!",
+        });
+        // setLoadingBtn(false);
+      }
+    } catch (error) {
+      console.log("error", error);
+      messageApi.open({
+        type: "error",
+        content: error.response.data.message,
+      });
+      // setLoadingBtn(false);
+    }
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+    console.log("formDataObject", formDataObject);
+  };
   return (
     <div className={classes.createRoom}>
+      {contextHolder}
       <Row>
         <Col span={4}>
           {/* <div className={classes.tabs}>
@@ -132,6 +281,7 @@ export default function CreateRoom() {
             <span>Chính sách</span>
           </div> */}
           <Anchor
+            className="anchor-custom"
             targetOffset={targetOffset}
             items={[
               {
@@ -156,7 +306,7 @@ export default function CreateRoom() {
           <Form
             layout={"vertical"}
             form={form}
-            //   onFinish={onFinish}
+            onFinish={onFinish}
             onChange={(value) => console.log(value)}
             autoComplete="off"
           >
@@ -167,19 +317,19 @@ export default function CreateRoom() {
                 gap: "24px",
               }}
             >
-              <div
-                className={classes.container}
-                id="part-1"
-                style={{
-                  height: "100vh",
-                  background: "rgba(255,0,0,0.02)",
-                  marginTop: "30vh",
-                }}
-              >
+              <div className={classes.container} id="part-1">
                 <h3 className={classes.titleBig}>THÔNG TIN PHÒNG</h3>
                 <Row gutter={40}>
                   <Col span={24}>
-                    <Form.Item label="Tên phòng" name="name">
+                    <Form.Item
+                      label="Tên phòng"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="Name"
+                    >
                       <Input
                         size="large"
                         placeholder="Vd : Wisteria Premium "
@@ -187,7 +337,15 @@ export default function CreateRoom() {
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item label="Giá niêm yết (VND/giờ)" name="name">
+                    <Form.Item
+                      label="Giá niêm yết (VND/giờ)"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="PriceByHour"
+                    >
                       <Input
                         size="large"
                         suffix="VND"
@@ -196,7 +354,15 @@ export default function CreateRoom() {
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item label="Giá niêm yết (VND/ngày)" name="name">
+                    <Form.Item
+                      label="Giá niêm yết (VND/ngày)"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="PriceByDate"
+                    >
                       <Input
                         size="large"
                         suffix="VND"
@@ -205,32 +371,80 @@ export default function CreateRoom() {
                     </Form.Item>
                   </Col>
                   <Col span={6}>
-                    <Form.Item label="Diện tích" name="name">
+                    <Form.Item
+                      label="Diện tích"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="Area"
+                    >
                       <Input size="large" suffix="m2" placeholder="Vd: 50" />
                     </Form.Item>
                   </Col>
                   <Col span={6}>
-                    <Form.Item label="Chiều dài " name="name">
+                    <Form.Item
+                      label="Chiều dài "
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="Length"
+                    >
                       <Input size="large" suffix="m" placeholder="Vd: 50" />
                     </Form.Item>
                   </Col>
                   <Col span={6}>
-                    <Form.Item label="Chiều rộng " name="name">
+                    <Form.Item
+                      label="Chiều rộng "
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="Width"
+                    >
                       <Input size="large" suffix="m" placeholder="Vd: 50" />
                     </Form.Item>
                   </Col>
                   <Col span={6}>
-                    <Form.Item label="Chiều cao trần " name="name">
+                    <Form.Item
+                      label="Chiều cao trần "
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="Height"
+                    >
                       <Input size="large" suffix="m" placeholder="Vd: 50" />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item label="Số lượng khách tối đa" name="name">
+                    <Form.Item
+                      label="Số lượng khách tối đa"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="MaximumCustomer"
+                    >
                       <Input size="large" suffix="Người" placeholder="Vd: 20" />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
-                    <Form.Item label="Phụ thu phát sinh" name="name">
+                    <Form.Item
+                      label="Phụ thu phát sinh"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="Surcharge"
+                    >
                       <Input
                         size="large"
                         suffix="Người"
@@ -240,7 +454,15 @@ export default function CreateRoom() {
                   </Col>
 
                   <Col span={24}>
-                    <Form.Item label="Mô tả">
+                    <Form.Item
+                      label="Mô tả"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                      name="Description"
+                    >
                       <TextArea
                         //   value={valueText}
                         //   onChange={(e) => setValueText(e.target.value)}
@@ -255,19 +477,29 @@ export default function CreateRoom() {
                   </Col>
                   <Col span={12}>
                     <div>
-                      <Form.Item style={{ marginBottom: "8px" }} name="name">
+                      <Form.Item
+                        style={{ marginBottom: "8px" }}
+                        name="HasBackground"
+                        valuePropName="checked"
+                        initialValue={null}
+                      >
                         <Checkbox className={classes.checkBox}>
                           Phông nền
                         </Checkbox>
                       </Form.Item>
-                      <Form.Item name="name">
+                      <Form.Item name="BackgroundDescription">
                         <Input size="large" placeholder="Ghi chú" />
                       </Form.Item>
                     </div>
                   </Col>
                   <Col span={12}>
                     <div>
-                      <Form.Item style={{ marginBottom: "8px" }} name="name">
+                      <Form.Item
+                        style={{ marginBottom: "8px" }}
+                        name="HasLamp"
+                        valuePropName="checked"
+                        initialValue={null}
+                      >
                         <Checkbox className={classes.checkBox}>
                           Hệ thống đèn
                         </Checkbox>
@@ -279,7 +511,12 @@ export default function CreateRoom() {
                   </Col>
                   <Col span={12}>
                     <div>
-                      <Form.Item style={{ marginBottom: "8px" }} name="name">
+                      <Form.Item
+                        style={{ marginBottom: "8px" }}
+                        name="HasTable"
+                        valuePropName="checked"
+                        initialValue={null}
+                      >
                         <Checkbox className={classes.checkBox}>Bàn</Checkbox>
                       </Form.Item>
                       <Form.Item name="name">
@@ -289,7 +526,12 @@ export default function CreateRoom() {
                   </Col>
                   <Col span={12}>
                     <div>
-                      <Form.Item style={{ marginBottom: "8px" }} name="name">
+                      <Form.Item
+                        style={{ marginBottom: "8px" }}
+                        name="HasChair"
+                        valuePropName="checked"
+                        initialValue={null}
+                      >
                         <Checkbox className={classes.checkBox}>
                           Ghế, Sofa
                         </Checkbox>
@@ -301,7 +543,12 @@ export default function CreateRoom() {
                   </Col>
                   <Col span={12}>
                     <div>
-                      <Form.Item style={{ marginBottom: "8px" }} name="name">
+                      <Form.Item
+                        style={{ marginBottom: "8px" }}
+                        name="HasFlower"
+                        valuePropName="checked"
+                        // initialValue={null}
+                      >
                         <Checkbox className={classes.checkBox}>
                           Hoa trang trí
                         </Checkbox>
@@ -313,10 +560,15 @@ export default function CreateRoom() {
                   </Col>
                   <Col span={12}>
                     <div>
-                      <Form.Item style={{ marginBottom: "8px" }} name="name">
+                      <Form.Item
+                        style={{ marginBottom: "8px" }}
+                        name="HasOtherDevice"
+                        valuePropName="checked"
+                        initialValue={null}
+                      >
                         <Checkbox className={classes.checkBox}>Khác</Checkbox>
                       </Form.Item>
-                      <Form.Item name="name">
+                      <Form.Item name="OtherDeviceDescription">
                         <Input size="large" placeholder="Ghi chú" />
                       </Form.Item>
                     </div>
@@ -327,7 +579,12 @@ export default function CreateRoom() {
                   </Col>
                   {listCheckBox.map((item, idx) => (
                     <Col key={idx} span={8}>
-                      <Form.Item key={idx} name="name">
+                      <Form.Item
+                        key={idx}
+                        name={item.name}
+                        valuePropName="checked"
+                        initialValue={null}
+                      >
                         <Checkbox className={classes.checkBox}>
                           {item.label}
                         </Checkbox>
@@ -336,15 +593,7 @@ export default function CreateRoom() {
                   ))}
                 </Row>
               </div>
-              <div
-                className={classes.container}
-                id="part-2"
-                style={{
-                  height: "100vh",
-                  background: "rgba(255,0,0,0.02)",
-                  marginTop: "30vh",
-                }}
-              >
+              <div className={classes.container} id="part-2">
                 <Row gutter={40}>
                   <Col span={24}>
                     <span className={classes.titleBig}>HÌNH ẢNH / VIDEO</span>
@@ -355,31 +604,44 @@ export default function CreateRoom() {
                       {listInfoImage.map((item, idx) => (
                         <div key={idx} className={classes.itemImage}>
                           <Upload
-                            key={idx}
                             listType="picture-card"
                             className={"avatar-uploader1"}
                             showUploadList={false}
+                            onRemove={true}
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             onChange={(e) => onChangeFile(e, item.id)}
                           >
-                            <div className={classes.imageDefault}>
-                              {files[item.id] === null ? (
-                                <ImageDefault />
-                              ) : (
-                                <Image
-                                  width={"100%"}
-                                  height={"100%"}
-                                  style={{ objectFit: "cover" }}
-                                  preview={false}
-                                  src={
-                                    files[item.id] === null
-                                      ? ""
-                                      : files[item.id]?.preview
-                                  }
-                                  //   fallback={fallBackImg}
-                                />
-                              )}
-                            </div>
+                            {
+                              <div className={classes.imageDefault}>
+                                {files[item.id] === null ? (
+                                  dataDetail[item.Name] ? (
+                                    <Image
+                                      width={"100%"}
+                                      height={"100%"}
+                                      style={{ objectFit: "cover" }}
+                                      preview={false}
+                                      src={IMG(dataDetail[item.Name])}
+                                      //   fallback={fallBackImg}
+                                    />
+                                  ) : (
+                                    <ImageDefault />
+                                  )
+                                ) : (
+                                  <Image
+                                    width={"100%"}
+                                    height={"100%"}
+                                    style={{ objectFit: "cover" }}
+                                    preview={false}
+                                    src={
+                                      files[item.id] === null
+                                        ? ""
+                                        : files[item.id]?.preview
+                                    }
+                                    //   fallback={fallBackImg}
+                                  />
+                                )}
+                              </div>
+                            }
                           </Upload>
                           <p>{item.title}</p>
                         </div>
@@ -409,7 +671,13 @@ export default function CreateRoom() {
                   </Col>
                 </Row>
               </div>
-              <div className={classes.container}>
+              <div
+                className={classes.container}
+                id="part-3"
+                style={{
+                  height: "90vh",
+                }}
+              >
                 <h3 className={classes.titleBig}>THÔNG TIN PHÒNG</h3>
                 <Row gutter={40}>
                   <Col span={12}>
@@ -504,6 +772,7 @@ export default function CreateRoom() {
                 style={{ width: "150px", marginLeft: "20px" }}
                 size="large"
                 type="primary"
+                htmlType="submit"
               >
                 Tạo phòng
               </Button>

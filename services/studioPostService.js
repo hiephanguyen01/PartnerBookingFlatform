@@ -1,8 +1,8 @@
 const { BaseService } = require("./baseService");
 
 class StudioPostService extends BaseService {
-  createStudioPost = (data) => {
-    return this.post(`/api/studio-post/create`, data);
+  createStudioPost = (category, data) => {
+    return this.post(`/api/studio-post/create?category=${category}`, data);
   };
   getAllPostPartner = () => {
     return this.get(`/api/studio-post/allPosts`);
@@ -10,8 +10,11 @@ class StudioPostService extends BaseService {
   getDetailPostPartnerById = (id, category) => {
     return this.get(`/api/studio-post/byPartnerId/${id}?category=${category}`);
   };
-  updatePostPartner = (id, category,data) => {
-    return this.patch(`/api/studio-post/byPartnerId/${id}?category=${category}`,data);
+  updatePostPartner = (id, category, data) => {
+    return this.patch(
+      `/api/studio-post/byPartnerId/${id}?category=${category}`,
+      data
+    );
   };
 }
 

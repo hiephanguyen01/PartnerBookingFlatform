@@ -74,7 +74,7 @@ const listInfoImage = [
     Name: "Image10",
   },
 ];
-export default function EditPost() {
+export default function EditPost({ params }) {
   const [form] = Form.useForm();
   const [files, setFiles] = useState([
     null,
@@ -98,13 +98,47 @@ export default function EditPost() {
   const [messageApi, contextHolder] = message.useMessage();
 
   const searchParams = useSearchParams();
-  console.log(dataDetail);
   const category = searchParams.get("category");
   const id = searchParams.get("id");
+
+  const initialValues = {
+    id: dataDetail.id,
+    Name: dataDetail?.Name,
+    IsVisible: dataDetail?.IsVisible,
+    BookingCount: dataDetail?.BookingCount,
+    Description: dataDetail?.Description,
+    WardId: dataDetail?.Address?.split(",")[1],
+    // ProvinceId: dataDetail?.Address?.split(",")[3],
+    // DistrictId: dataDetail?.Address?.split(",")[2],
+    addressDetail: dataDetail?.Address?.split(",")[0],
+  };
+
+  useEffect(() => {
+    form.setFieldsValue(initialValues);
+  }, [form, initialValues]);
+
+  useEffect(() => {
+    getPostPartnerByid();
+    extractAllProvinces();
+  }, [id, category]);
+
+  useEffect(() => {
+    extractAllDistricts(dataDetail?.DistrictId);
+    extractAllWards(dataDetail?.WardId);
+    setAddress([
+      dataDetail?.Address?.split(",")[3],
+      dataDetail?.Address?.split(",")[2],
+      dataDetail?.Address?.split(",")[1],
+      dataDetail?.Address?.split(",")[0],
+    ]);
+    setInputAddress(dataDetail?.Address?.split(",")[0]);
+  }, [dataDetail]);
 
   const onChangeSelect = async (e, idx) => {
     console.log(e, idx);
     if (idx == 0) {
+      setInputAddress("");
+      setAddress(["", "", "", ""]);
       const { Code } = listProvinces.find((item) => item.Name == e);
       await extractAllDistricts(Code);
     }
@@ -112,22 +146,16 @@ export default function EditPost() {
       const { Code } = listDistricts.find((item) => item.Name == e);
       await extractAllWards(Code);
     }
-    if (idx == 0) {
-      setInputAddress("");
-      setAddress((prev) => {
-        let arr = ["", "", "", ""];
-        arr[idx] = e.toString().trim();
-        return arr;
-      });
-    } else {
-      setAddress((prev) => {
-        let arr = prev;
-        arr[idx] = e.toString().trim();
-        return arr;
-      });
-    }
+    setAddress((prev) => {
+      let arr = [...prev];
+      arr[idx] = e.toString();
+      return arr;
+    });
+    // if (idx == 2) {
+    //   form.setFieldValue("WardId", e.toString());
+    // } else {
 
-    console.log(address);
+    // }
   };
   const onFinish = async (values) => {
     let formData = new FormData();
@@ -146,7 +174,6 @@ export default function EditPost() {
     formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
-    console.log(formDataObject);
 
     try {
       const { data } = await studioPostService.updatePostPartner(
@@ -185,7 +212,7 @@ export default function EditPost() {
   async function getPostPartnerByid() {
     try {
       const { data } = await studioPostService.getDetailPostPartnerById(
-        id,
+        params.detail,
         category
       );
       setDataDetail(data.data);
@@ -205,6 +232,7 @@ export default function EditPost() {
   async function extractAllWards(code) {
     try {
       const { data } = await wardService.getAllWards(code);
+      console.log("extractAllWards", data);
       setListWards(data);
     } catch (error) {
       console.log(error);
@@ -220,38 +248,6 @@ export default function EditPost() {
     }
   }
 
-  const initialValues = {
-    id: dataDetail.id,
-    Name: dataDetail?.Name,
-    IsVisible: dataDetail?.IsVisible,
-    BookingCount: dataDetail?.BookingCount,
-    Description: dataDetail?.Description,
-    // WardId: dataDetail?.Address?.split(",")[1],
-    // ProvinceId: dataDetail?.Address?.split(",")[3],
-    // DistrictId: dataDetail?.Address?.split(",")[2],
-    addressDetail: dataDetail?.Address?.split(",")[0],
-  };
-  useEffect(() => {
-    form.setFieldsValue(initialValues);
-  }, [form, initialValues]);
-
-  useEffect(() => {
-    getPostPartnerByid();
-    extractAllProvinces();
-  }, [id, category]);
-
-  useEffect(() => {
-    extractAllDistricts(dataDetail?.DistrictId);
-    extractAllWards(dataDetail?.WardId);
-    setAddress([
-      dataDetail?.Address?.split(",")[3],
-      dataDetail?.Address?.split(",")[2],
-      dataDetail?.Address?.split(",")[1],
-      dataDetail?.Address?.split(",")[0],
-    ]);
-    setInputAddress(dataDetail?.Address?.split(",")[0]);
-  }, [dataDetail]);
-  console.log("address", dataDetail?.Address?.split(","));
   return (
     <div>
       {contextHolder}
@@ -327,13 +323,13 @@ export default function EditPost() {
               <Col span={12}>
                 <Form.Item label="Phường / xã">
                   <Select
+                    value={address[2]}
                     onChange={(e) => onChangeSelect(e, 2)}
                     size="large"
-                    value={address[2] && address[2]}
                   >
                     <Option value="">--- Chọn ---</Option>
                     {listWards.map((item) => (
-                      <Option key={item.id} value={item.Name}>
+                      <Option key={item.Id} value={item.Name}>
                         {item.Name}
                       </Option>
                     ))}

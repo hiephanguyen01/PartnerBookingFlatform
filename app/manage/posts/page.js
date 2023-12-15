@@ -75,7 +75,7 @@ export default function Post() {
       render: (text, _) => (
         <div
           onClick={() =>
-            router.push(`/manage/posts/edit?category=${_.category}&id=${_.Id}`)
+            router.push(`/manage/posts/${_.Id}?category=${_.category}&id=${_.Id}`)
           }
           style={{
             display: "flex",
