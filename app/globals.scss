@@ -103,6 +103,26 @@ body {
     rgb(var(--background-start-rgb));
 } */
 
+.anchor-custom {
+  .ant-anchor {
+    margin-left: 10px !important;
+    &::before {
+      border-inline-start: 4px solid rgba(5, 5, 5, 0.06) !important;
+    }
+    .ant-anchor-link {
+      padding: 16px 10px !important;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 24px;
+    }
+  }
+  .ant-anchor-ink.ant-anchor-ink-visible {
+    height: 50px !important;
+    width: 3px;
+  }
+}
+
 .avatar-uploader1 {
   .ant-upload.ant-upload-select {
     border: none !important;
