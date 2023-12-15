@@ -5,6 +5,8 @@ import { Button, Image, Table } from "antd";
 import SuccessIcon from "@/assets/svg/success";
 import { converPriceVND } from "@/utils/convert";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { useRouter, useSearchParams } from "next/navigation";
+
 const columns = [
   {
     title: "Tên phòng",
@@ -57,7 +59,10 @@ const dataTable = [
     priceDate: 200000,
   },
 ];
-export default function RoomCategory({ next }) {
+export default function RoomCategory({ next, postNew }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
   // return (
   //   <>
   //     <div className={classes.containerTable}>
@@ -96,7 +101,17 @@ export default function RoomCategory({ next }) {
         </div>
       </div>
       <div style={{ textAlign: "right", marginTop: "16px" }}>
-        <Button style={{ width: "150px" }} size="large" type="dashed" danger>
+        <Button
+          style={{ width: "150px" }}
+          size="large"
+          type="dashed"
+          danger
+          onClick={() =>
+            router.push(
+              `/manage/posts/${postNew.id}/rooms/create?category=${category}`
+            )
+          }
+        >
           Thêm phòng
         </Button>
         <Button

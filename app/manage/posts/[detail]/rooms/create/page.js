@@ -1,4 +1,6 @@
 "use client";
+import ImageDefault from "@/assets/svg/ImageDefault";
+import { studioRoomService } from "@/services/studioRoomServices";
 import {
   Anchor,
   Button,
@@ -13,12 +15,10 @@ import {
   Upload,
   message,
 } from "antd";
+import TextArea from "antd/es/input/TextArea";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import classes from "./createRoom.module.scss";
-import TextArea from "antd/es/input/TextArea";
-import ImageDefault from "@/assets/svg/ImageDefault";
-import { studioRoomService } from "@/services/studioRoomServices";
-import { useRouter, useSearchParams } from "next/navigation";
 const { Option } = Select;
 const listInfoImage = [
   {
@@ -406,7 +406,7 @@ export default function CreateRoom({ params }) {
                         name="HasBackground"
                         valuePropName="checked"
                         initialValue={null}
-                        initialValue={null}
+                        
                       >
                         <Checkbox className={classes.checkBox}>
                           Phông nền
@@ -424,7 +424,7 @@ export default function CreateRoom({ params }) {
                         name="HasLamp"
                         valuePropName="checked"
                         initialValue={null}
-                        initialValue={null}
+                        
                       >
                         <Checkbox className={classes.checkBox}>
                           Hệ thống đèn
@@ -441,7 +441,7 @@ export default function CreateRoom({ params }) {
                         style={{ marginBottom: "8px" }}
                         name="HasTable"
                         valuePropName="checked"
-                        initialValue={null}
+                        
                         initialValue={null}
                       >
                         <Checkbox className={classes.checkBox}>Bàn</Checkbox>

@@ -26,8 +26,9 @@ const CustomerComment = ({ data }) => {
 
       <p className={style.content}>{data.Description}</p>
       <div className={style.image}>
-        {data?.Image?.map((val) => (
+        {data?.Image?.map((val, idx) => (
           <Image
+            key={idx}
             style={{ width: "68px", height: "68px", borderRadius: "8px" }}
             src={IMG(val)}
           />

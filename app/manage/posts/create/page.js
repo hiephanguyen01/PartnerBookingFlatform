@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import classes from "./create.module.scss";
 import { Button, Steps } from "antd";
@@ -10,6 +11,8 @@ import { useRouter } from "next/navigation";
 
 export default function CreatePost() {
   const [current, setCurrent] = useState(0);
+
+  const [postNew, setPostNew] = useState({});
 
   const router = useRouter();
   const next = () => {
@@ -26,11 +29,11 @@ export default function CreatePost() {
     },
     {
       title: "Thời gian làm việc",
-      content: <WorkTime next={next} />,
+      content: <WorkTime setPostNew={setPostNew} next={next} />,
     },
     {
       title: "Loại phòng",
-      content: <RoomCategory next={next} />,
+      content: <RoomCategory postNew={postNew} next={next} />,
     },
   ];
 

@@ -27,6 +27,7 @@ import { getCategoryByName } from "@/utils/category";
 import { useSelector } from "react-redux";
 import axios from "axios";
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 export default function ScheduleAndPrice({ params }) {
   const [dates, setDates] = useState([]);
   const [data, setData] = useState();
@@ -209,7 +210,7 @@ export default function ScheduleAndPrice({ params }) {
                 <Option value={""}>--- Chọn phòng ---</Option>
                 {listRooms.map((item) => {
                   return (
-                    <Option key={item.id} value={item.id}>
+                    <Option key={item.id} value={tem.id}>
                       {item.Name}
                     </Option>
                   );
